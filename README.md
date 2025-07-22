@@ -5,7 +5,7 @@ Error/Exception Handling: Manejo validaciones y errores mediante excepciones con
 
 RESTful: Se usa para organizar los endpoints de la API. Aunque el fragmento de código mostrado no contiene los controladores directamente, las clases de aplicación como UsuarioApplicationService están diseñadas para ser usadas desde endpoints REST del tipo /api/usuarios, siguiendo una estructura clara basada en recursos. Cada acción del servicio representa un caso de uso que puede mapearse a un verbo HTTP (POST para registrar, GET para obtener, etc.), y los datos que se exponen al cliente se encapsulan mediante objetos DTO como UsuarioDTO.
 
-###Lab 11
+Lab 11
 
 Practicas usadas:
 El uso de nombres claros es fundamental para que el código sea fácil de entender. En este caso, los nombres como repositorioUsuario, codificadorContrasenia, verificarCorreoDisponible, registrarNuevoUsuario y autenticarUsuario son ejemplos bien elegidos. Cada uno indica claramente su propósito y evita ambigüedades. 
@@ -21,3 +21,8 @@ En lo que respecta a la representación de datos, el uso de un DTO como UsuarioD
 Para el tratamiento de errores, se aplican correctamente excepciones personalizadas. En lugar de lanzar errores genéricos, se define y se usan clases como CorreoDuplicadoException y CredencialesInvalidasException. Esto no sólo mejora la claridad del código, sino que también permite manejar los errores de forma específica en capas superiores (como en controladores o filtros), mostrando mensajes apropiados al usuario o registrando errores de forma más precisa.
 
 Finalmente, el diseño de clases es coherente con la responsabilidad única. ServicioUsuario está claramente enfocado en la lógica de aplicación relacionada con los usuarios, y UsuarioDTO en la transferencia de datos. 
+
+Lab 12
+
+Se aplicaron los 3 principios Solid:
+Las clases ServicioUsuario y UsuarioDTO aplican de forma coherente varios principios de SOLID en su diseño. En primer lugar, ambas respetan el Principio de Responsabilidad Única (SRP): ServicioUsuario se encarga exclusivamente de coordinar operaciones de negocio relacionadas con usuarios, como su registro y autenticación, sin involucrarse en aspectos de presentación, persistencia directa o validación externa, mientras que UsuarioDTO cumple la función específica de transferir datos hacia la capa cliente, encapsulando solo la información necesaria. Además, se observa el Principio de Inversión de Dependencias (DIP) en ServicioUsuario, que depende de abstracciones como IUsuarioRepository y PasswordEncoder en lugar de implementaciones concretas, lo cual favorece el desacoplamiento y la capacidad de testeo. Por su parte, ambas clases están diseñadas bajo el Principio de Abierto/Cerrado (OCP), ya que su estructura permite ser extendida con nuevas funcionalidades o campos sin modificar el código existente, promoviendo así la estabilidad y evolución segura del sistema. Finalmente, el diseño de UsuarioDTO, al mantener una interfaz clara y predecible para exponer datos, respeta también el Principio de Sustitución de Liskov (LSP), siendo susceptible de ser reemplazada por otras representaciones compatibles sin afectar el flujo de ejecución. En conjunto, ambos componentes reflejan una arquitectura orientada a objetos clara, cohesiva y preparada para el cambio.
