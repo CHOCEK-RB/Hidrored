@@ -1,49 +1,28 @@
-# Proyecto Hidrored
+### Estilos de Programación:
+Things: Se aplico el estilo orientado a objetos, modelando las partes del sistema como entidades del dominio (Usuario), comandos (RegistrarUsuarioCommand) y objetos de transporte (UsuarioDTO). Cada clase tiene una responsabilidad clara, con sus propios datos y comportamiento, siguiendo buenas prácticas de diseño orientado a objetos.
 
-Este repositorio contiene el código fuente de la aplicación **Hidrored**, una plataforma web diseñada para ayudar a los ciudadanos a reportar problemas relacionados con el servicio de agua y desagüe en sus respectivas zonas.
+Error/Exception Handling: Manejo validaciones y errores mediante excepciones controladas en los servicios de aplicación. Por ejemplo, si el correo electrónico ya está en uso al registrar un nuevo usuario, se lanza una IllegalStateException. De forma similar, si las credenciales ingresadas en el login no coinciden, se lanza una SecurityException. Esto permite cortar el flujo de ejecución y enviar mensajes claros sobre lo que falló, manteniendo el código limpio y la lógica de negocio centralizada.
 
-## Propósito y Funcionalidades del Programa
+RESTful: Se usa para organizar los endpoints de la API. Aunque el fragmento de código mostrado no contiene los controladores directamente, las clases de aplicación como UsuarioApplicationService están diseñadas para ser usadas desde endpoints REST del tipo /api/usuarios, siguiendo una estructura clara basada en recursos. Cada acción del servicio representa un caso de uso que puede mapearse a un verbo HTTP (POST para registrar, GET para obtener, etc.), y los datos que se exponen al cliente se encapsulan mediante objetos DTO como UsuarioDTO.
 
-**Hidrored** busca facilitar la comunicación entre los ciudadanos y las entidades responsables de los servicios de agua y desagüe, permitiendo un reporte ágil y un seguimiento transparente de las incidencias.
+Lab 11
 
-### Propósito Principal:
-* **Centralización de Reportes:** Proporcionar un canal único y accesible para que los usuarios puedan informar sobre problemas de agua y desagüe de manera eficiente.
-* **Transparencia y Seguimiento:** Ofrecer a los usuarios la capacidad de rastrear el estado de sus reportes en tiempo real y recibir actualizaciones.
-* **Mejora de la Gestión:** Ayudar a las autoridades o empresas de servicios a recibir información detallada y localizada de los problemas, facilitando una respuesta más rápida y efectiva.
+Practicas usadas:
+El uso de nombres claros es fundamental para que el código sea fácil de entender. En este caso, los nombres como repositorioUsuario, codificadorContrasenia, verificarCorreoDisponible, registrarNuevoUsuario y autenticarUsuario son ejemplos bien elegidos. Cada uno indica claramente su propósito y evita ambigüedades. 
 
-### Funcionalidades Clave:
+En cuanto a las funciones, el código sigue una organización donde cada método realiza una única tarea. Por ejemplo, registrarNuevoUsuario se encarga únicamente de registrar usuarios, mientras que la validación del correo está separada en su propio método (verificarCorreoDisponible). Esta separación mejora la modularidad y hace más fácil reutilizar o probar cada función de forma independiente. También evita que un método crezca innecesariamente en complejidad, lo cual mejora la mantenibilidad del sistema.
 
-* **Gestión de Usuarios:**
-    * Registro de nuevos usuarios.
-    * Autenticación de usuarios (login).
-    * Acceso al perfil de usuario.
-* **Reporte de Incidencias de Agua/Desagüe:**
-    * **Creación de Reportes:** Los usuarios pueden crear nuevos reportes de problemas, incluyendo:
-        * Título y descripción detallada del problema.
-        * Ubicación precisa (latitud, longitud y dirección).
-        * Tipo de problema (fuga, tubería rota, desborde, etc.).
-        * Prioridad del reporte (baja, media, alta, urgente).
-    * **Adjuntar Evidencia:** Posibilidad de subir imágenes para documentar el reporte.
-    * **Comentarios:** Los usuarios y, en una fase posterior, el personal autorizado, pueden añadir comentarios para clarificar o actualizar la información del reporte.
-    * **Historial de Cambios:** Cada reporte mantendrá un historial detallado de los cambios de estado y otras actualizaciones relevantes.
-    * **Actualización de Estado:** El estado del reporte puede ser actualizado (Pendiente, En Progreso, Resuelto, Cerrado) reflejando el avance de la resolución del problema.
-* **Notificaciones:**
-    * Los usuarios recibirán notificaciones sobre el estado de sus reportes o cualquier actualización relevante.
-    * Posibilidad de marcar notificaciones como leídas.
+Respecto a los comentarios, se usan con moderación y aportan información útil. Por ejemplo, en UsuarioDTO, el comentario sobre el constructor explica que su acceso es privado para controlar su creación desde un método fábrica. Este tipo de comentarios son valiosos porque explican el "por qué" de una decisión de diseño, en lugar de describir lo obvio. 
 
-## Arquitectura del Sistema
+La estructura del código fuente también está bien aplicada. Cada clase está organizada de forma ordenada: primero se declaran los atributos, luego el constructor, seguido de los métodos públicos y por último los privados. Además, se respetan correctamente las indentaciones y espacios, lo que facilita la lectura visual del código. Las anotaciones como @Service están ubicadas justo donde corresponde, antes de la declaración de la clase, manteniendo la coherencia con las convenciones de Spring.
 
-El proyecto Hidrored sigue una arquitectura por capas basada en **Domain-Driven Design (DDD)** y la **Arquitectura Hexagonal (Ports and Adapters)**, lo que garantiza una alta cohesión, bajo acoplamiento, mantenibilidad y escalabilidad.
+En lo que respecta a la representación de datos, el uso de un DTO como UsuarioDTO es una decisión correcta. Este patrón te permite exponer sólo los datos necesarios hacia el cliente, protegiendo al mismo tiempo la lógica y atributos internos de las entidades del dominio. Además, el método desdeDominio() es una forma limpia y controlada de transformar una entidad Usuario en un DTO, reforzando la separación de responsabilidades entre capas.
 
-### Estructura de Paquetes:
+Para el tratamiento de errores, se aplican correctamente excepciones personalizadas. En lugar de lanzar errores genéricos, se define y se usan clases como CorreoDuplicadoException y CredencialesInvalidasException. Esto no sólo mejora la claridad del código, sino que también permite manejar los errores de forma específica en capas superiores (como en controladores o filtros), mostrando mensajes apropiados al usuario o registrando errores de forma más precisa.
 
-El backend está organizado en las siguientes capas principales:
+Finalmente, el diseño de clases es coherente con la responsabilidad única. ServicioUsuario está claramente enfocado en la lógica de aplicación relacionada con los usuarios, y UsuarioDTO en la transferencia de datos. 
 
-* **Dominio (`backend/Dominio`):** El corazón de la aplicación, contiene la lógica de negocio pura y agnóstica a la tecnología (Entidades, Objetos de Valor, Agregados, Interfaces de Repositorio, Servicios de Dominio).
-* **Aplicación (`backend/Aplicacion`):** Define los casos de uso del sistema. Orquesta las operaciones del dominio, maneja transacciones y utiliza DTOs para la comunicación con la capa de presentación.
-* **Infraestructura (`backend/Infraestructura`):** Proporciona las implementaciones concretas de las interfaces de repositorio (usando Spring Data MongoDB), servicios de almacenamiento de imágenes, y configuraciones generales (seguridad, CORS).
-* **Presentación (`backend/Presentacion`):** Expone la API RESTful del backend, manejando las solicitudes y respuestas HTTP a través de controladores y DTOs específicos para la API.
+Lab 12
 
-### Diagrama de Clases UML (Visión General de Capas y Módulos)
-
-![Diagrama de Arquitectura Hidrored Backend](src/uml.png)
+Se aplicaron los 3 principios Solid:
+Las clases ServicioUsuario y UsuarioDTO aplican de forma coherente varios principios de SOLID en su diseño. En primer lugar, ambas respetan el Principio de Responsabilidad Única (SRP): ServicioUsuario se encarga exclusivamente de coordinar operaciones de negocio relacionadas con usuarios, como su registro y autenticación, sin involucrarse en aspectos de presentación, persistencia directa o validación externa, mientras que UsuarioDTO cumple la función específica de transferir datos hacia la capa cliente, encapsulando solo la información necesaria. Además, se observa el Principio de Inversión de Dependencias (DIP) en ServicioUsuario, que depende de abstracciones como IUsuarioRepository y PasswordEncoder en lugar de implementaciones concretas, lo cual favorece el desacoplamiento y la capacidad de testeo. Por su parte, ambas clases están diseñadas bajo el Principio de Abierto/Cerrado (OCP), ya que su estructura permite ser extendida con nuevas funcionalidades o campos sin modificar el código existente, promoviendo así la estabilidad y evolución segura del sistema. Finalmente, el diseño de UsuarioDTO, al mantener una interfaz clara y predecible para exponer datos, respeta también el Principio de Sustitución de Liskov (LSP), siendo susceptible de ser reemplazada por otras representaciones compatibles sin afectar el flujo de ejecución. En conjunto, ambos componentes reflejan una arquitectura orientada a objetos clara, cohesiva y preparada para el cambio.
