@@ -3,6 +3,7 @@ import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage";
 import MapPage from "./pages/MapPage";
 import AuthPage from "./pages/AuthPage";
+import CreateRegisterPage from "./pages/CreateRegisterPage";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
@@ -19,6 +20,14 @@ function App() {
             <Route index element={<HomePage />} />
             <Route path="mapa" element={<MapPage />} />
             <Route path="auth" element={<AuthPage />} />{" "}
+            <Route
+              path="crear-reporte"
+              element={
+                <ProtectedRoute>
+                  <CreateRegisterPage />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="reportes"
               element={
