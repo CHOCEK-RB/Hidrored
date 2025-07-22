@@ -1,49 +1,25 @@
-# Proyecto Hidrored
+Estilos de programación aplicados
 
-Este repositorio contiene el código fuente de la aplicación **Hidrored**, una plataforma web diseñada para ayudar a los ciudadanos a reportar problemas relacionados con el servicio de agua y desagüe en sus respectivas zonas.
+Pipeline (Fluent API):
+En mis clases de configuración de Spring Security (SecurityConfig.java y WebConfig.java) utilizo el builder pattern para encadenar llamadas en un flujo tipo tubería. Cada llamada devuelve el mismo objeto http, lo que permite una sintaxis concisa y legible. Por ejemplo:
+http.csrf(csrf -> csrf.disable()).authorizeHttpRequests(authz -> authz.requestMatchers("/api/**").permitAll().anyRequest().authenticated());
 
-## Propósito y Funcionalidades del Programa
+RESTful:
+Sigo convenciones REST para organizar mis endpoints. Toda la API queda expuesta bajo el path /api/**, de manera que cada URI representa un recurso, por ejemplo:
+/api/reportes
+/api/seguimiento
+/api/usuarios
+La configuración de seguridad en Spring hace que esas rutas sean accesibles sin autenticación y protege el resto de endpoints.
 
-**Hidrored** busca facilitar la comunicación entre los ciudadanos y las entidades responsables de los servicios de agua y desagüe, permitiendo un reporte ágil y un seguimiento transparente de las incidencias.
+Cookbook:
+En React he creado componentes “recetarios” reutilizables que encapsulan fragmentos de UI completos. Cada uno es una receta para montar una pieza de interfaz y luego los combino en mi página principal. Ejemplos:
+– IconCard: receta para mostrar una tarjeta con icono, título y descripción, definida como
+const IconCard: React.FC<{ icon: JSX.Element; title: string; children: ReactNode }> = ({ icon, title, children }) => (…);
+– ReportIcon, TrackIcon e ImproveIcon: recetas para renderizar distintos SVG de iconos.
 
-### Propósito Principal:
-* **Centralización de Reportes:** Proporcionar un canal único y accesible para que los usuarios puedan informar sobre problemas de agua y desagüe de manera eficiente.
-* **Transparencia y Seguimiento:** Ofrecer a los usuarios la capacidad de rastrear el estado de sus reportes en tiempo real y recibir actualizaciones.
-* **Mejora de la Gestión:** Ayudar a las autoridades o empresas de servicios a recibir información detallada y localizada de los problemas, facilitando una respuesta más rápida y efectiva.
-
-### Funcionalidades Clave:
-
-* **Gestión de Usuarios:**
-    * Registro de nuevos usuarios.
-    * Autenticación de usuarios (login).
-    * Acceso al perfil de usuario.
-* **Reporte de Incidencias de Agua/Desagüe:**
-    * **Creación de Reportes:** Los usuarios pueden crear nuevos reportes de problemas, incluyendo:
-        * Título y descripción detallada del problema.
-        * Ubicación precisa (latitud, longitud y dirección).
-        * Tipo de problema (fuga, tubería rota, desborde, etc.).
-        * Prioridad del reporte (baja, media, alta, urgente).
-    * **Adjuntar Evidencia:** Posibilidad de subir imágenes para documentar el reporte.
-    * **Comentarios:** Los usuarios y, en una fase posterior, el personal autorizado, pueden añadir comentarios para clarificar o actualizar la información del reporte.
-    * **Historial de Cambios:** Cada reporte mantendrá un historial detallado de los cambios de estado y otras actualizaciones relevantes.
-    * **Actualización de Estado:** El estado del reporte puede ser actualizado (Pendiente, En Progreso, Resuelto, Cerrado) reflejando el avance de la resolución del problema.
-* **Notificaciones:**
-    * Los usuarios recibirán notificaciones sobre el estado de sus reportes o cualquier actualización relevante.
-    * Posibilidad de marcar notificaciones como leídas.
-
-## Arquitectura del Sistema
-
-El proyecto Hidrored sigue una arquitectura por capas basada en **Domain-Driven Design (DDD)** y la **Arquitectura Hexagonal (Ports and Adapters)**, lo que garantiza una alta cohesión, bajo acoplamiento, mantenibilidad y escalabilidad.
-
-### Estructura de Paquetes:
-
-El backend está organizado en las siguientes capas principales:
-
-* **Dominio (`backend/Dominio`):** El corazón de la aplicación, contiene la lógica de negocio pura y agnóstica a la tecnología (Entidades, Objetos de Valor, Agregados, Interfaces de Repositorio, Servicios de Dominio).
-* **Aplicación (`backend/Aplicacion`):** Define los casos de uso del sistema. Orquesta las operaciones del dominio, maneja transacciones y utiliza DTOs para la comunicación con la capa de presentación.
-* **Infraestructura (`backend/Infraestructura`):** Proporciona las implementaciones concretas de las interfaces de repositorio (usando Spring Data MongoDB), servicios de almacenamiento de imágenes, y configuraciones generales (seguridad, CORS).
-* **Presentación (`backend/Presentacion`):** Expone la API RESTful del backend, manejando las solicitudes y respuestas HTTP a través de controladores y DTOs específicos para la API.
-
-### Diagrama de Clases UML (Visión General de Capas y Módulos)
-
-![Diagrama de Arquitectura Hidrored Backend](src/uml.png)
+Things:
+Modelado de “cosas” tanto en frontend como en backend:
+– En React: cada componente (IconCard, ReportIcon, TrackIcon, ImproveIcon, HomePage) es un objeto con datos (props) y comportamiento (método render).
+– En Spring: cada bean (PasswordEncoder, SecurityFilterChain) es una cosa gestionada por el contenedor, con su propia configuración y ciclo de vida. Por ejemplo:
+@Bean public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
+@Bean public SecurityFilterChain filterChain(HttpSecurity http) throws Exception { … }
