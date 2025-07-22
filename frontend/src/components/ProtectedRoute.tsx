@@ -2,7 +2,6 @@ import React from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 
-// Icono para la advertencia
 const LockIcon = () => (
   <svg
     className="w-16 h-16 mx-auto text-red-500"
@@ -52,9 +51,9 @@ const NotLoggedIn: React.FC = () => {
 export const ProtectedRoute: React.FC<{ children: React.JSX.Element }> = ({
   children,
 }) => {
-  const { isAuthenticated } = useAuth();
+  const { user } = useAuth();
 
-  if (!isAuthenticated) {
+  if (!user) {
     return <NotLoggedIn />;
   }
 

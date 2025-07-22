@@ -96,24 +96,19 @@ const RegisterForm: React.FC = () => {
       alert(`Usuario ${response.data.nombre} registrado con éxito!`);
       login(response.data);
     } catch (err: any) {
-      // Usamos 'any' para poder inspeccionar el objeto de error
       console.error("--- ERROR DETALLADO EN EL REGISTRO ---");
 
       if (err.response) {
-        // El backend respondió con un código de error (4xx o 5xx)
         console.error("Data:", err.response.data);
         console.error("Status:", err.response.status);
         console.error("Headers:", err.response.headers);
-        // Usamos el mensaje del manejador de excepciones global
         setError(err.response.data.message || "Error en el servidor.");
       } else if (err.request) {
-        // La solicitud se hizo pero no se recibió respuesta (ej. backend caído)
         console.error("Request:", err.request);
         setError(
           "No se pudo conectar con el servidor. ¿Está el backend corriendo?",
         );
       } else {
-        // Ocurrió un error al configurar la solicitud
         console.error("Error", err.message);
         setError("Ocurrió un error inesperado al enviar los datos.");
       }
@@ -122,14 +117,11 @@ const RegisterForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Mostramos el mensaje de error al usuario */}
       {error && (
         <p className="text-red-500 text-sm text-center font-semibold">
           {error}
         </p>
       )}
-
-      {/* ... (inputs del formulario sin cambios) ... */}
       <div>
         <label
           htmlFor="nombre"
