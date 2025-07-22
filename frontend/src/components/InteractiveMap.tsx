@@ -6,22 +6,27 @@ import {
   Popup,
   useMapEvents,
 } from "react-leaflet";
+
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
+import iconUrl from "leaflet/dist/images/marker-icon.png";
+import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
+import shadowUrl from "leaflet/dist/images/marker-shadow.png";
+
 const MapConfig = {
   defaultIcon: L.icon({
-    iconUrl: "/leaflet/marker-icon.png",
-    iconRetinaUrl: "/leaflet/marker-icon-2x.png",
-    shadowUrl: "/leaflet/marker-shadow.png",
+    iconUrl,
+    iconRetinaUrl,
+    shadowUrl,
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
     shadowSize: [41, 41],
   }),
-  initialize: function() {
+  initialize: function () {
     L.Marker.prototype.options.icon = this.defaultIcon;
-  }
+  },
 };
 
 export interface Report {
@@ -36,17 +41,21 @@ interface InteractiveMapProps {
   onMapDoubleClick: (coords: L.LatLng) => void;
 }
 
-const MapEvents: React.FC<{ onDoubleClick: (coords: L.LatLng) => void }> = ({ onDoubleClick }) => {
+const MapEvents: React.FC<{ onDoubleClick: (coords: L.LatLng) => void }> = ({
+  onDoubleClick,
+}) => {
   useMapEvents({
     dblclick(e) {
-            console.log("Evento dblclick CAPTURADO en InteractiveMap:", e.latlng);
       onDoubleClick(e.latlng);
     },
   });
   return null;
 };
 
-const InteractiveMap: React.FC<InteractiveMapProps> = ({ reports, onMapDoubleClick }) => {
+const InteractiveMap: React.FC<InteractiveMapProps> = ({
+  reports,
+  onMapDoubleClick,
+}) => {
   useEffect(() => {
     MapConfig.initialize();
   }, []);
@@ -57,7 +66,6 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({ reports, onMapDoubleCli
     <MapContainer
       center={mapCenter}
       zoom={15}
-      // Este estilo es correcto.
       style={{ height: "100%", width: "100%", borderRadius: "8px" }}
     >
       <TileLayer
@@ -78,3 +86,4 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({ reports, onMapDoubleCli
 };
 
 export default InteractiveMap;
+
