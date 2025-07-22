@@ -8,7 +8,16 @@ RESTful: Se usa para organizar los endpoints de la API. Aunque el fragmento de c
 ###Lab 11
 
 Practicas usadas:
-Se aplicaron practicas para mejorar la legibilidad y mantenibilidad. Primero, se usaron nombres claros, descriptivos y consistentes en español, como ServicioUsuario, repositorioUsuario o codificadorContrasenia, lo que ayuda a que el propósito de cada clase o variable sea evidente sin necesidad de leer toda la implementación.
+El uso de nombres claros es fundamental para que el código sea fácil de entender. En este caso, los nombres como repositorioUsuario, codificadorContrasenia, verificarCorreoDisponible, registrarNuevoUsuario y autenticarUsuario son ejemplos bien elegidos. Cada uno indica claramente su propósito y evita ambigüedades. 
 
-Ademas, se implemento el principio de funciones pequeñas, esto mejora la claridad y permite reutilización. Se añadieron comentarios y Javadoc en los métodos públicos para explicar claramente qué hace cada uno, qué recibe y qué retorna, facilitando el trabajo en equipo y la documentación automática. También se mejoró la estructura del código fuente, ordenando los elementos de forma lógica: atributos primero, luego constructor, métodos públicos y finalmente los privados, siguiendo un estándar de legibilidad. 
+En cuanto a las funciones, el código sigue una organización donde cada método realiza una única tarea. Por ejemplo, registrarNuevoUsuario se encarga únicamente de registrar usuarios, mientras que la validación del correo está separada en su propio método (verificarCorreoDisponible). Esta separación mejora la modularidad y hace más fácil reutilizar o probar cada función de forma independiente. También evita que un método crezca innecesariamente en complejidad, lo cual mejora la mantenibilidad del sistema.
 
+Respecto a los comentarios, se usan con moderación y aportan información útil. Por ejemplo, en UsuarioDTO, el comentario sobre el constructor explica que su acceso es privado para controlar su creación desde un método fábrica. Este tipo de comentarios son valiosos porque explican el "por qué" de una decisión de diseño, en lugar de describir lo obvio. 
+
+La estructura del código fuente también está bien aplicada. Cada clase está organizada de forma ordenada: primero se declaran los atributos, luego el constructor, seguido de los métodos públicos y por último los privados. Además, se respetan correctamente las indentaciones y espacios, lo que facilita la lectura visual del código. Las anotaciones como @Service están ubicadas justo donde corresponde, antes de la declaración de la clase, manteniendo la coherencia con las convenciones de Spring.
+
+En lo que respecta a la representación de datos, el uso de un DTO como UsuarioDTO es una decisión correcta. Este patrón te permite exponer sólo los datos necesarios hacia el cliente, protegiendo al mismo tiempo la lógica y atributos internos de las entidades del dominio. Además, el método desdeDominio() es una forma limpia y controlada de transformar una entidad Usuario en un DTO, reforzando la separación de responsabilidades entre capas.
+
+Para el tratamiento de errores, estás aplicando correctamente excepciones personalizadas. En lugar de lanzar errores genéricos, se define y se usan clases como CorreoDuplicadoException y CredencialesInvalidasException. Esto no sólo mejora la claridad del código, sino que también permite manejar los errores de forma específica en capas superiores (como en controladores o filtros), mostrando mensajes apropiados al usuario o registrando errores de forma más precisa.
+
+Finalmente, el diseño de clases es coherente con la responsabilidad única. ServicioUsuario está claramente enfocado en la lógica de aplicación relacionada con los usuarios, y UsuarioDTO en la transferencia de datos. 
