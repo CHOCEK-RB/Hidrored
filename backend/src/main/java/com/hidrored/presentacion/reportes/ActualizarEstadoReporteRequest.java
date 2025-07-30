@@ -1,27 +1,18 @@
 package com.hidrored.presentacion.reportes;
 
-import java.io.*;
-import java.util.*;
+import lombok.Data;
 
-/**
- * 
- */
+@Data
 public class ActualizarEstadoReporteRequest {
 
-    /**
-     * Default constructor
-     */
-    public ActualizarEstadoReporteRequest() {
-    }
+  private String nuevoEstado;
+  private String motivo;
 
-    /**
-     * 
-     */
-    public String nuevoEstado;
+  public String getNuevoEstado() {
+    return nuevoEstado;
+  }
 
-    /**
-     * 
-     */
-    public String motivo;
-
+  public String getMotivo() {
+    return motivo;
+  }
 }

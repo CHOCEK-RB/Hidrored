@@ -1,32 +1,15 @@
 package com.hidrored.presentacion.reportes;
 
-import java.io.*;
-import java.util.*;
+import com.hidrored.aplicacion.reportes.HistorialCambioDTO;
+import lombok.Value;
 
-/**
- * 
- */
+@Value
 public class HistorialCambioResponse {
+  String fechaCambio;
+  String descripcion;
+  String usuarioIdCambio;
 
-    /**
-     * Default constructor
-     */
-    public HistorialCambioResponse() {
-    }
-
-    /**
-     * 
-     */
-    public String fechaCambio;
-
-    /**
-     * 
-     */
-    public String descripcion;
-
-    /**
-     * 
-     */
-    public String usuarioIdCambio;
-
+  public static HistorialCambioResponse fromDto(HistorialCambioDTO dto) {
+    return new HistorialCambioResponse(dto.getFechaCambio(), dto.getDescripcion(), dto.getUsuarioIdCambio());
+  }
 }

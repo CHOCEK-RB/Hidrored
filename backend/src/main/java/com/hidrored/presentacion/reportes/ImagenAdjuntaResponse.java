@@ -1,42 +1,20 @@
 package com.hidrored.presentacion.reportes;
 
-import java.io.*;
-import java.util.*;
+import com.hidrored.aplicacion.reportes.ImagenAdjuntaDTO;
+import lombok.Value;
 
-/**
- * 
- */
+@Value
 public class ImagenAdjuntaResponse {
+  String url;
+  String nombreArchivo;
+  String tipoMime;
+  Long tamanioBytes;
+  String fechaSubida;
 
-    /**
-     * Default constructor
-     */
-    public ImagenAdjuntaResponse() {
-    }
-
-    /**
-     * 
-     */
-    public String url;
-
-    /**
-     * 
-     */
-    public String nombreArchivo;
-
-    /**
-     * 
-     */
-    public String tipoMime;
-
-    /**
-     * 
-     */
-    public Long tamanioBytes;
-
-    /**
-     * 
-     */
-    public String fechaSubida;
-
+  public static ImagenAdjuntaResponse fromDto(ImagenAdjuntaDTO dto) {
+    if (dto == null)
+      return null;
+    return new ImagenAdjuntaResponse(dto.getUrl(), dto.getNombreArchivo(), dto.getTipoMime(), dto.getTamanioBytes(),
+        dto.getFechaSubida());
+  }
 }

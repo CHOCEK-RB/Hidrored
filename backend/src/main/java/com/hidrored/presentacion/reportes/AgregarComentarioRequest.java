@@ -1,22 +1,13 @@
 package com.hidrored.presentacion.reportes;
 
-import java.io.*;
-import java.util.*;
+import lombok.Data;
 
-/**
- * 
- */
+@Data
 public class AgregarComentarioRequest {
 
-    /**
-     * Default constructor
-     */
-    public AgregarComentarioRequest() {
-    }
+  private String contenido;
 
-    /**
-     * 
-     */
-    public String contenido;
-
+  public String getContenido() {
+    return contenido;
+  }
 }

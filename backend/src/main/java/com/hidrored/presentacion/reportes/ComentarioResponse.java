@@ -1,37 +1,16 @@
 package com.hidrored.presentacion.reportes;
 
-import java.io.*;
-import java.util.*;
+import com.hidrored.aplicacion.reportes.ComentarioDTO;
+import lombok.Value;
 
-/**
- * 
- */
+@Value
 public class ComentarioResponse {
+  String id;
+  String usuarioId;
+  String contenido;
+  String fechaCreacion;
 
-    /**
-     * Default constructor
-     */
-    public ComentarioResponse() {
-    }
-
-    /**
-     * 
-     */
-    public String id;
-
-    /**
-     * 
-     */
-    public String usuarioId;
-
-    /**
-     * 
-     */
-    public String contenido;
-
-    /**
-     * 
-     */
-    public String fechaCreacion;
-
+  public static ComentarioResponse fromDto(ComentarioDTO dto) {
+    return new ComentarioResponse(dto.getId(), dto.getUsuarioId(), dto.getContenido(), dto.getFechaCreacion());
+  }
 }
