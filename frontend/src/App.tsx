@@ -3,11 +3,12 @@ import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage";
 import MapPage from "./pages/MapPage";
 import AuthPage from "./pages/AuthPage";
+import AllReportsPage from "./pages/AllReportsPage";
+import MyReportsPage from "./pages/MyReportsPage";
 import CreateRegisterPage from "./pages/CreateRegisterPage";
 import { AuthProvider } from "./context/AuthContext";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 
-const ReportsPage = () => <h2>Mis Reportes</h2>;
 const ProfilePage = () => <h2>Mi Perfil</h2>;
 
 function App() {
@@ -32,7 +33,15 @@ function App() {
               path="reportes"
               element={
                 <ProtectedRoute>
-                  <ReportsPage />
+                  <MyReportsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="todos-los-reportes"
+              element={
+                <ProtectedRoute>
+                  <AllReportsPage />
                 </ProtectedRoute>
               }
             />
