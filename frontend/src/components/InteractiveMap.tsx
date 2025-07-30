@@ -104,7 +104,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
       {reports.map((report) => (
         <Marker
           key={report.id}
-          position={[report.ubicacion.latitud, report.ubicacion.longitud]}
+          position={[report.ubicacion.longitud, report.ubicacion.latitud]}
         >
           <Popup>
             <h3 className="font-bold text-lg">{report.titulo}</h3>

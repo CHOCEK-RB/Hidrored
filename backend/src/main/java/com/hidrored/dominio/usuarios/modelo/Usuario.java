@@ -31,6 +31,7 @@ public class Usuario {
     this.password = password;
   }
 
+  @SuppressWarnings("unused")
   private Usuario() {
   }
 
