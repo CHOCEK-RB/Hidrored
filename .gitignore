@@ -1,0 +1,82 @@
+# ===============================================
+# Directorios y Archivos de Propósito General
+# ===============================================
+.DS_Store             # Archivos de macOS
+Thumbs.db             # Archivos de miniaturas de Windows
+.idea/                # Archivos de configuración de IntelliJ IDEA
+.vscode/              # Archivos de configuración de VS Code
+*.iml                 # Archivos de módulo de IntelliJ IDEA
+.project              # Archivos de proyecto de Eclipse
+.classpath            # Archivos de classpath de Eclipse
+.settings/            # Directorio de settings de Eclipse
+
+# ===============================================
+# Backend (Spring Boot / Maven)
+# ===============================================
+/backend/target/               # Directorio de salida de Maven (clases compiladas, JARs/WARs)
+/backend/pom.xml.tag
+/backend/pom.xml.releaseBackup
+/backend/pom.xml.versionsBackup
+/backend/pom.xml.next
+/backend/release.properties
+/backend/dependency-reduced-pom.xml
+/backend/build/                  # Para proyectos Gradle, aunque tu estás usando Maven
+/backend/*.log                   # Archivos de log generados
+/backend/*.txt                   # Otros archivos de texto generados
+/backend/*.zip                   # Archivos zip generados por builds
+/backend/*.tar.gz
+/backend/hs_err_pid* # Archivos de error de JVM (core dumps)
+/backend/.settings/
+
+# IDE specific files for Java
+/backend/.gradle/
+/backend/gradle/wrapper/gradle-wrapper.jar
+/backend/!.gradle/
+/backend/!gradle/wrapper/gradle-wrapper.jar
+
+# Spring Boot specific
+/backend/src/main/resources/application-*.properties
+/backend/src/main/resources/application-*.yml
+/backend/src/main/resources/application-local.properties  # Configuración local (ej., credenciales de BD)
+/backend/src/main/resources/application-local.yml
+/backend/src/main/resources/bootstrap-local.properties
+/backend/src/main/resources/bootstrap-local.yml
+
+# Archivos de configuración que contienen credenciales o información sensible
+/backend/*.properties             # Puede ser muy amplio, considera ser más específico si tienes otros .properties
+/backend/*.yml                    # Similar al anterior
+/backend/*.env                    # Archivos de entorno específicos
+
+
+# ===============================================
+# Frontend (React / Vite / npm)
+# ===============================================
+/frontend/node_modules/           # Dependencias del frontend (npm install)
+/frontend/dist/                   # Directorio de salida de la build de Vite
+/frontend/.env                    # Archivo .env general
+/frontend/.env.local              # Archivos de entorno locales (credenciales, claves de API, etc.)
+/frontend/.env.*.local            # Archivos de entorno por ambiente locales
+/frontend/npm-debug.log           # Logs de npm
+/frontend/yarn-error.log          # Logs de yarn
+/frontend/build/                  # Si usas Create-React-App u otro bundler que use 'build'
+/frontend/.vite/                  # Caché de Vite
+/frontend/.turbo/                 # Si usas Turborepo
+/frontend/.eslintcache            # Caché de ESLint
+/frontend/*.log                   # Logs genéricos
+/frontend/report.html             # Reportes de pruebas si se generan así
+/frontend/coverage/               # Reportes de cobertura de tests
+
+# ===============================================
+# Dependencias Generales de IDEs y OS (por si acaso)
+# ===============================================
+*.swp                 # Swap files de Vim
+*~                    # Archivos de backup de algunos editores
+.DS_Store             # macOS desktop services store
+.localized            # macOS directory localization
+.Trash-* # macOS trash
+._* # macOS resource forks
+.AppleDouble          # macOS hidden directory for resource forks
+.fseventsd            # macOS FSEvents daemon folder
+.Spotlight-V100       # macOS Spotlight data
+.Trashes              # macOS trash folder
+.apdisk               # Apple file system (APFS) disk images

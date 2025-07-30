@@ -1,0 +1,57 @@
+# Maven
+target/
+pom.xml.tag
+pom.xml.next
+pom.xml.bak
+release.properties
+dependency-reduced-pom.xml
+build/
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VS Code
+.vscode/
+
+*.log
+logs/
+*.txt
+
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+.DS_Store
+Thumbs.db
+
+# Specific to Spring Boot
+/src/main/resources/static/
+/src/main/resources/public/
+/src/main/resources/templates/
+!/src/main/resources/static/**
+!/src/main/resources/public/**
+!/src/main/resources/templates/**
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Other
+*.swp
+*.bak
+*.orig
+*.diff
+*.patch
+*.tmp
