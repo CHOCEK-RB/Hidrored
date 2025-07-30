@@ -572,3 +572,12 @@ public ResponseEntity<ReporteDTO> crearReporte(...) {
         3.  El servicio usa `IReporteRepository` (Dominio) para orquestar la lógica.
         4.  La implementación del repositorio en `IReporteRepositoryImpl` (Infraestructura) ejecuta la consulta en MongoDB.
 
+# Gestión de proyecto
+
+## Trello
+
+* **URL:** [Trello](https://trello.com/b/LHojjtUQ/aguais)
+
+* **Tablero**
+
+![Tablero Trello](assets/trello.png)
