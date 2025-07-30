@@ -20,7 +20,7 @@ public class SecurityConfig {
     http
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(authz -> authz
-            .requestMatchers("/api/**").permitAll()
+            .requestMatchers("/api/**", "/uploads/**").permitAll()
             .anyRequest().authenticated());
     return http.build();
   }
