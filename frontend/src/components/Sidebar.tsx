@@ -70,6 +70,23 @@ const ReportIcon = () => (
   </svg>
 );
 
+const ListIcon = () => (
+  <svg
+    className="w-6 h-6 mr-3"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M4 6h16M4 10h16M4 14h16M4 18h16"
+    ></path>
+  </svg>
+);
+
 const ProfileIcon = () => (
   <svg
     className="w-6 h-6 mr-3"
@@ -113,7 +130,7 @@ const Sidebar: React.FC = () => {
     "flex items-center p-4 text-gray-300 hover:bg-blue-900 hover:text-white rounded-lg transition-colors duration-200";
 
   return (
-    <div className="w-64 h-screen bg-blue-950 text-white flex flex-col shadow-lg">
+    <div className="w-64 h-screen bg-blue-950 text-white flex flex-col shadow-lg sticky top-0">
       <div className="flex items-center justify-center p-6 border-b border-blue-900">
         <WaterDropIcon />
         <span className="ml-3 text-2xl font-bold">Hidrored</span>
@@ -146,6 +163,15 @@ const Sidebar: React.FC = () => {
         >
           <ReportIcon />
           <span>Mis Reportes</span>
+        </NavLink>
+        <NavLink
+          to="/todos-los-reportes"
+          className={({ isActive }) =>
+            isActive ? activeLinkClass : inactiveLinkClass
+          }
+        >
+          <ListIcon />
+          <span>Todos los Reportes</span>
         </NavLink>
         <NavLink
           to="/perfil"

@@ -1,9 +1,11 @@
-import React, { useState, type FormEvent } from "react";
+import React, { useState, useEffect, type FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 
 const LoginForm: React.FC = () => {
   const { login } = useAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -19,6 +21,7 @@ const LoginForm: React.FC = () => {
       });
 
       login(response.data);
+      navigate("/");
     } catch (err) {
       console.error("Error en el inicio de sesión:", err);
       setError("Credenciales inválidas. Por favor, inténtalo de nuevo.");
@@ -74,6 +77,7 @@ const LoginForm: React.FC = () => {
 
 const RegisterForm: React.FC = () => {
   const { login } = useAuth();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -95,6 +99,7 @@ const RegisterForm: React.FC = () => {
       console.log("Registro exitoso!", response.data);
       alert(`Usuario ${response.data.nombre} registrado con éxito!`);
       login(response.data);
+      navigate("/");
     } catch (err: any) {
       console.error("--- ERROR DETALLADO EN EL REGISTRO ---");
 
@@ -201,6 +206,14 @@ const RegisterForm: React.FC = () => {
 
 const AuthPage: React.FC = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   return (
     <div className="max-w-md mx-auto bg-white p-8 rounded-xl shadow-lg">
