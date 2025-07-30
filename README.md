@@ -3,12 +3,12 @@
 
 ### Integrantes
 
-* Condorios Chambi, Anthony Richar
-* Castelo Choque, Joaquin Andree
-* Hañari Cutipa, Cesar Alejandro
-* Calcina Muchica, Sergio Eliseo
-* Calizaya Quispe, Jos´e Luis
-* Quina Delgado, Marcelo Adrian
+- Condorios Chambi, Anthony Richar
+- Castelo Choque, Joaquin Andree
+- Hanari Cutipa, Cesar Alejandro
+- Calcina Muchica, Sergio Eliseo
+- Calizaya Quispe, Jose Luis
+- Quina Delgado, Marcelo Adrian
 
 ---
 
