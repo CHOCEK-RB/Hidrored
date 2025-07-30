@@ -1,80 +1,125 @@
 package com.hidrored.aplicacion.reportes;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.hidrored.dominio.reportes.IReporteRepository;
 import com.hidrored.dominio.reportes.modelo.*;
 import com.hidrored.dominio.usuarios.IUsuarioRepository;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class ReporteApplicationService {
 
   private final IReporteRepository reporteRepository;
   private final IUsuarioRepository usuarioRepository;
+  private final FileStorageService fileStorageService;
+  private final RestTemplate restTemplate;
 
-  public ReporteApplicationService(IReporteRepository reporteRepository, IUsuarioRepository usuarioRepository) {
+  public ReporteApplicationService(IReporteRepository reporteRepository, IUsuarioRepository usuarioRepository,
+      FileStorageService fileStorageService, RestTemplate restTemplate) {
     this.reporteRepository = reporteRepository;
     this.usuarioRepository = usuarioRepository;
+    this.fileStorageService = fileStorageService;
+    this.restTemplate = restTemplate;
   }
 
   @Transactional
-  public ReporteDTO crearReporte(CrearReporteCommand command) {
+  public ReporteDTO crearReporte(CrearReporteCommand command, MultipartFile imagenFile) {
     usuarioRepository.findById(command.getUsuarioId())
         .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + command.getUsuarioId()));
-
-    Ubicacion ubicacion = new Ubicacion(command.getLatitud(), command.getLongitud(), command.getDireccion());
 
     Reporte nuevoReporte = new Reporte(
         command.getUsuarioId(),
         command.getTitulo(),
         command.getDescripcion(),
-        ubicacion,
+        new Ubicacion(command.getLongitud(), command.getLatitud(), command.getDescripcion()),
         TipoReporte.valueOf(command.getTipo().toUpperCase()),
         PrioridadReporte.valueOf(command.getPrioridad().toUpperCase()));
+
+    try {
+      String url = String.format("https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=%s&lon=%s",
+          command.getLatitud(), command.getLongitud());
+      JsonNode response = restTemplate.getForObject(url, JsonNode.class);
+      if (response != null && response.has("address")) {
+        JsonNode address = response.get("address");
+
+        String distrito;
+        if (address.has("city_district")) {
+          distrito = address.get("city_district").asText();
+        } else if (address.has("suburb")) {
+          distrito = address.get("suburb").asText();
+        } else {
+          distrito = "No disponible";
+        }
+
+        String provincia = address.has("state") ? address.get("state").asText() : "No disponible";
+
+        nuevoReporte.setDistrito(distrito);
+        nuevoReporte.setProvincia(provincia);
+      }
+    } catch (Exception e) {
+      nuevoReporte.setDistrito("Error al obtener");
+      nuevoReporte.setProvincia("Error al obtener");
+    }
+
+    if (imagenFile != null && !imagenFile.isEmpty()) {
+      ImagenAdjunta imagenGuardada = fileStorageService.store(imagenFile);
+      nuevoReporte.setImagenAdjunta(imagenGuardada);
+    }
 
     Reporte reporteGuardado = reporteRepository.save(nuevoReporte);
     return ReporteDTO.fromDomain(reporteGuardado);
   }
 
-  @Transactional
-  public ReporteDTO agregarComentarioAReporte(AgregarComentarioCommand command) {
-    Reporte reporte = reporteRepository.findById(command.getReporteId())
-        .orElseThrow(() -> new IllegalStateException("Reporte no encontrado"));
+  @Transactional(readOnly = true)
+  public List<ReporteDTO> obtenerReportesCercanos(double latitud, double longitud, double radioKm) {
+    final double RADIO_TERRESTRE_KM = 6378.1;
+    double radioEnRadianes = radioKm / RADIO_TERRESTRE_KM;
 
-    usuarioRepository.findById(command.getUsuarioId())
-        .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
-
-    reporte.agregarComentario(command.getUsuarioId(), command.getContenido());
-
-    Reporte reporteActualizado = reporteRepository.save(reporte);
-    return ReporteDTO.fromDomain(reporteActualizado);
+    return reporteRepository.executeGeoSearch(longitud, latitud, radioEnRadianes).stream()
+        .map(ReporteDTO::fromDomain)
+        .toList();
   }
 
-  @Transactional
-  public ReporteDTO actualizarEstadoReporte(ActualizarEstadoReporteCommand command) {
-    Reporte reporte = reporteRepository.findById(command.getReporteId())
-        .orElseThrow(() -> new IllegalStateException("Reporte no encontrado"));
+  @Transactional(readOnly = true)
+  public List<ReporteDTO> obtenerTodosLosReportes() {
+    return reporteRepository.findAll().stream()
+        .map(ReporteDTO::fromDomain)
+        .toList();
+  }
 
-    usuarioRepository.findById(command.getUsuarioIdCambio())
-        .orElseThrow(() -> new IllegalArgumentException("Usuario que realiza el cambio no encontrado"));
+  @Transactional(readOnly = true)
+  public List<ReporteDTO> obtenerReportes(String provincia, String distrito) {
+    List<Reporte> reportes;
 
-    EstadoReporte nuevoEstado = EstadoReporte.valueOf(command.getNuevoEstado().toUpperCase());
+    boolean hasProvincia = provincia != null && !provincia.isEmpty();
+    boolean hasDistrito = distrito != null && !distrito.isEmpty();
 
-    reporte.actualizarEstado(nuevoEstado, command.getUsuarioIdCambio(), command.getMotivo());
+    if (hasProvincia && hasDistrito) {
+      reportes = reporteRepository.findByProvinciaIgnoreCaseAndDistritoIgnoreCase(provincia, distrito);
+    } else if (hasProvincia) {
+      reportes = reporteRepository.findByProvinciaIgnoreCase(provincia);
+    } else if (hasDistrito) {
+      reportes = reporteRepository.findByDistritoIgnoreCase(distrito);
+    } else {
+      reportes = reporteRepository.findAll();
+    }
 
-    Reporte reporteActualizado = reporteRepository.save(reporte);
-    return ReporteDTO.fromDomain(reporteActualizado);
+    return reportes.stream()
+        .map(ReporteDTO::fromDomain)
+        .toList();
   }
 
   @Transactional(readOnly = true)
   public List<ReporteDTO> obtenerReportesPorUsuario(String usuarioId) {
     return reporteRepository.findByUsuarioId(usuarioId).stream()
         .map(ReporteDTO::fromDomain)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   @Transactional(readOnly = true)
@@ -82,5 +127,20 @@ public class ReporteApplicationService {
     return reporteRepository.findById(reporteId)
         .map(ReporteDTO::fromDomain)
         .orElse(null);
+  }
+
+  @Transactional
+  public ReporteDTO agregarComentarioAReporte(AgregarComentarioCommand command) {
+    Reporte reporte = reporteRepository.findById(command.getReporteId())
+        .orElseThrow(() -> new IllegalStateException("Reporte no encontrado con ID: " + command.getReporteId()));
+
+    usuarioRepository.findById(command.getUsuarioId())
+        .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + command.getUsuarioId()));
+
+    reporte.agregarComentario(command.getUsuarioId(), command.getContenido());
+
+    Reporte reporteActualizado = reporteRepository.save(reporte);
+
+    return ReporteDTO.fromDomain(reporteActualizado);
   }
 }

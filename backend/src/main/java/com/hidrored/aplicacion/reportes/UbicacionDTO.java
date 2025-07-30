@@ -10,7 +10,7 @@ public class UbicacionDTO {
   private final Double longitud;
   private final String direccion;
 
-  private UbicacionDTO(Double latitud, Double longitud, String direccion) {
+  public UbicacionDTO(Double latitud, Double longitud, String direccion) {
     this.latitud = latitud;
     this.longitud = longitud;
     this.direccion = direccion;

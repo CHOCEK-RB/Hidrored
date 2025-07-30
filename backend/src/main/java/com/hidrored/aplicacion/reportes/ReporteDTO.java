@@ -1,11 +1,9 @@
 package com.hidrored.aplicacion.reportes;
 
+import com.hidrored.dominio.reportes.modelo.Reporte;
 import lombok.Getter;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import com.hidrored.dominio.reportes.modelo.Reporte;
 
 @Getter
 public class ReporteDTO {
@@ -18,6 +16,7 @@ public class ReporteDTO {
   private final String prioridad;
   private final String fechaCreacion;
   private final String fechaActualizacion;
+  private final ImagenAdjuntaDTO imagenAdjunta;
   private final UbicacionDTO ubicacion;
   private final List<ComentarioDTO> comentarios;
   private final List<HistorialCambioDTO> historialCambios;
@@ -33,13 +32,23 @@ public class ReporteDTO {
     this.prioridad = reporte.getPrioridad().name();
     this.fechaCreacion = reporte.getFechaCreacion().format(formatter);
     this.fechaActualizacion = reporte.getFechaActualizacion().format(formatter);
-    this.ubicacion = UbicacionDTO.fromDomain(reporte.getUbicacion());
+    this.imagenAdjunta = ImagenAdjuntaDTO.fromDomain(reporte.getImagenAdjunta());
+
+    if (reporte.getLocation() != null && reporte.getLocation().length >= 2) {
+      this.ubicacion = new UbicacionDTO(
+          reporte.getLocation()[1],
+          reporte.getLocation()[0],
+          reporte.getDireccion());
+    } else {
+      this.ubicacion = null;
+    }
+
     this.comentarios = reporte.getComentarios().stream()
         .map(ComentarioDTO::fromDomain)
-        .collect(Collectors.toList());
+        .toList();
     this.historialCambios = reporte.getHistorialCambios().stream()
         .map(HistorialCambioDTO::fromDomain)
-        .collect(Collectors.toList());
+        .toList();
   }
 
   public static ReporteDTO fromDomain(Reporte reporte) {
