@@ -1,6 +1,7 @@
 package com.hidrored.dominio.reportes.modelo;
 
 import lombok.Getter;
+import org.springframework.data.annotation.PersistenceCreator;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -16,5 +17,13 @@ public class Comentario {
     this.usuarioId = usuarioId;
     this.contenido = contenido;
     this.fechaCreacion = LocalDateTime.now();
+  }
+
+  @PersistenceCreator
+  public Comentario(String id, String usuarioId, String contenido, LocalDateTime fechaCreacion) {
+    this.id = id;
+    this.usuarioId = usuarioId;
+    this.contenido = contenido;
+    this.fechaCreacion = fechaCreacion;
   }
 }

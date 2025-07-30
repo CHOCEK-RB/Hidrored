@@ -1,13 +1,18 @@
 package com.hidrored.dominio.reportes.modelo;
 
-import lombok.Getter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Document(collection = "reportes")
 @Getter
@@ -18,7 +23,19 @@ public class Reporte {
   private String usuarioId;
   private String titulo;
   private String descripcion;
-  private Ubicacion ubicacion;
+  private String direccion;
+
+  @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
+  private double[] location;
+
+  @Setter
+  private String distrito;
+  @Setter
+  private String provincia;
+
+  @Setter
+  private ImagenAdjunta imagenAdjunta;
+
   private EstadoReporte estado;
   private TipoReporte tipo;
   private PrioridadReporte prioridad;
@@ -27,8 +44,10 @@ public class Reporte {
   private List<Comentario> comentarios = new ArrayList<>();
   private List<HistorialCambio> historialCambios = new ArrayList<>();
 
-  public Reporte(String usuarioId, String titulo, String descripcion, Ubicacion ubicacion, TipoReporte tipo,
-      PrioridadReporte prioridad) {
+  public Reporte(String usuarioId, String titulo, String descripcion,
+      Ubicacion ubicacion,
+      TipoReporte tipo, PrioridadReporte prioridad) {
+
     if (usuarioId == null || titulo == null || titulo.trim().isEmpty() || descripcion == null
         || descripcion.trim().isEmpty()) {
       throw new IllegalArgumentException("Los campos del reporte no pueden ser nulos.");
@@ -37,15 +56,21 @@ public class Reporte {
     this.usuarioId = usuarioId;
     this.titulo = titulo;
     this.descripcion = descripcion;
-    this.ubicacion = ubicacion;
+    this.direccion = ubicacion.getDireccion();
+
+    this.location = new double[] { ubicacion.getLongitud(), ubicacion.getLatitud() };
+
     this.estado = EstadoReporte.PENDIENTE;
     this.tipo = tipo;
     this.prioridad = prioridad;
     this.fechaCreacion = LocalDateTime.now();
     this.fechaActualizacion = LocalDateTime.now();
     this.historialCambios.add(new HistorialCambio(LocalDateTime.now(), "Reporte creado.", usuarioId));
+    this.comentarios = new ArrayList<>();
+    this.imagenAdjunta = null;
   }
 
+  @SuppressWarnings("unused")
   private Reporte() {
   }
 
