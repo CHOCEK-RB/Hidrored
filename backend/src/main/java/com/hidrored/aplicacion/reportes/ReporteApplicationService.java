@@ -1,6 +1,7 @@
 package com.hidrored.aplicacion.reportes;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import tools.jackson.databind.JsonNode;
+
 import com.hidrored.dominio.reportes.IReporteRepository;
 import com.hidrored.dominio.reportes.modelo.*;
 import com.hidrored.dominio.usuarios.IUsuarioRepository;
@@ -50,14 +51,14 @@ public class ReporteApplicationService {
 
         String distrito;
         if (address.has("city_district")) {
-          distrito = address.get("city_district").asText();
+          distrito = address.get("city_district").asString();
         } else if (address.has("suburb")) {
-          distrito = address.get("suburb").asText();
+          distrito = address.get("suburb").asString();
         } else {
           distrito = "No disponible";
         }
 
-        String provincia = address.has("state") ? address.get("state").asText() : "No disponible";
+        String provincia = address.has("state") ? address.get("state").asString() : "No disponible";
 
         nuevoReporte.setDistrito(distrito);
         nuevoReporte.setProvincia(provincia);
