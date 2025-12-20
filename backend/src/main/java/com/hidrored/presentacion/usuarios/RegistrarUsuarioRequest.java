@@ -1,8 +1,10 @@
 package com.hidrored.presentacion.usuarios;
 
 import lombok.Data;
+import lombok.Getter;
 
 @Data
+@Getter
 public class RegistrarUsuarioRequest {
   private String nombre;
   private String email;
