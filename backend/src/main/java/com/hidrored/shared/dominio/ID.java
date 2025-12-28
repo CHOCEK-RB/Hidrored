@@ -1,4 +1,4 @@
-package com.hidrored.dominio.usuarios.modelo;
+package com.hidrored.shared.dominio;
 
 import java.util.Objects;
 import java.util.UUID; // Importa UUID

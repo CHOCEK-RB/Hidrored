@@ -5,6 +5,8 @@ import tools.jackson.databind.JsonNode;
 import com.hidrored.dominio.reportes.IReporteRepository;
 import com.hidrored.dominio.reportes.modelo.*;
 import com.hidrored.dominio.usuarios.IUsuarioRepository;
+import com.hidrored.shared.dominio.ImagenAdjunta;
+import com.hidrored.shared.dominio.Ubicacion;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

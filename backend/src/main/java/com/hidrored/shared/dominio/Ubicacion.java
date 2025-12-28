@@ -1,4 +1,4 @@
-package com.hidrored.dominio.reportes.modelo;
+package com.hidrored.shared.dominio;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package com.hidrored.config;
+package com.hidrored.shared.infraestructura.config;
 
 import com.hidrored.dominio.reportes.modelo.Reporte;
 import org.springframework.context.ApplicationListener;
