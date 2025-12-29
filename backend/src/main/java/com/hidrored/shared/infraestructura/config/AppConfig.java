@@ -1,4 +1,4 @@
-package com.hidrored.config;
+package com.hidrored.shared.infraestructura.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

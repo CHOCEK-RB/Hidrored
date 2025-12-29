@@ -1,6 +1,6 @@
 package com.hidrored.aplicacion.reportes;
 
-import com.hidrored.dominio.reportes.modelo.Ubicacion;
+import com.hidrored.shared.dominio.Ubicacion;
 
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
 package com.hidrored.aplicacion.reportes;
 
 import com.hidrored.aplicacion.reportes.excepciones.StorageException;
-import com.hidrored.dominio.reportes.modelo.ImagenAdjunta;
+import com.hidrored.shared.dominio.ImagenAdjunta;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;

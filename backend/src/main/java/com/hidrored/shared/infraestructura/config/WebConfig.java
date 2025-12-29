@@ -1,4 +1,5 @@
-package com.hidrored.config;
+package com.hidrored.shared.infraestructura.config;
+
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
