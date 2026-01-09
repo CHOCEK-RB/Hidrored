@@ -1,4 +1,4 @@
-package com.hidrored.presentacion;
+package com.hidrored.shared.infraestructura.excepciones;
 
 import com.hidrored.aplicacion.reportes.excepciones.StorageException;
 import org.springframework.http.HttpStatus;
