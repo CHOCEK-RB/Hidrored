@@ -1,4 +1,4 @@
-package com.hidrored.presentacion.reportes;
+package com.hidrored.modulos.social.infraestructura.web;
 
 import lombok.Data;
 

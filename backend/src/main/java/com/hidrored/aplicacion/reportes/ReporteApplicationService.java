@@ -131,19 +131,4 @@ public class ReporteApplicationService {
         .map(ReporteDTO::fromDomain)
         .orElse(null);
   }
-
-  @Transactional
-  public ReporteDTO agregarComentarioAReporte(AgregarComentarioCommand command) {
-    Reporte reporte = reporteRepository.findById(command.getReporteId())
-        .orElseThrow(() -> new IllegalStateException("Reporte no encontrado con ID: " + command.getReporteId()));
-
-    usuarioRepository.findById(command.getUsuarioId())
-        .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado con ID: " + command.getUsuarioId()));
-
-    reporte.agregarComentario(command.getUsuarioId(), command.getContenido());
-
-    Reporte reporteActualizado = reporteRepository.save(reporte);
-
-    return ReporteDTO.fromDomain(reporteActualizado);
-  }
 }

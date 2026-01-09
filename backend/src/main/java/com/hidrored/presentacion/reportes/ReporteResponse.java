@@ -17,7 +17,6 @@ public class ReporteResponse {
   String fechaActualizacion;
   ImagenAdjuntaResponse imagenAdjunta;
   UbicacionResponse ubicacion;
-  List<ComentarioResponse> comentarios;
   List<HistorialCambioResponse> historialCambios;
 
   public static ReporteResponse fromDto(ReporteDTO dto) {
@@ -33,7 +32,6 @@ public class ReporteResponse {
         dto.getFechaActualizacion(),
         ImagenAdjuntaResponse.fromDto(dto.getImagenAdjunta()),
         UbicacionResponse.fromDto(dto.getUbicacion()),
-        dto.getComentarios().stream().map(ComentarioResponse::fromDto).toList(),
         dto.getHistorialCambios().stream().map(HistorialCambioResponse::fromDto).toList());
   }
 }
