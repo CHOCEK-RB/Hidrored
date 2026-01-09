@@ -43,7 +43,6 @@ public class Reporte {
   private PrioridadReporte prioridad;
   private LocalDateTime fechaCreacion;
   private LocalDateTime fechaActualizacion;
-  private List<Comentario> comentarios = new ArrayList<>();
   private List<HistorialCambio> historialCambios = new ArrayList<>();
 
   public Reporte(String usuarioId, String titulo, String descripcion,
@@ -68,17 +67,11 @@ public class Reporte {
     this.fechaCreacion = LocalDateTime.now();
     this.fechaActualizacion = LocalDateTime.now();
     this.historialCambios.add(new HistorialCambio(LocalDateTime.now(), "Reporte creado.", usuarioId));
-    this.comentarios = new ArrayList<>();
     this.imagenAdjunta = null;
   }
 
   @SuppressWarnings("unused")
   private Reporte() {
-  }
-
-  public void agregarComentario(String usuarioId, String contenido) {
-    this.comentarios.add(new Comentario(usuarioId, contenido));
-    this.fechaActualizacion = LocalDateTime.now();
   }
 
   public void actualizarEstado(EstadoReporte nuevoEstado, String usuarioIdCambio, String motivo) {

@@ -18,7 +18,6 @@ public class ReporteDTO {
   private final String fechaActualizacion;
   private final ImagenAdjuntaDTO imagenAdjunta;
   private final UbicacionDTO ubicacion;
-  private final List<ComentarioDTO> comentarios;
   private final List<HistorialCambioDTO> historialCambios;
 
   private ReporteDTO(Reporte reporte) {
@@ -43,9 +42,6 @@ public class ReporteDTO {
       this.ubicacion = null;
     }
 
-    this.comentarios = reporte.getComentarios().stream()
-        .map(ComentarioDTO::fromDomain)
-        .toList();
     this.historialCambios = reporte.getHistorialCambios().stream()
         .map(HistorialCambioDTO::fromDomain)
         .toList();
