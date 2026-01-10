@@ -1,4 +1,4 @@
-package com.hidrored.aplicacion.usuarios;
+package com.hidrored.modulos.usuarios.aplicacion;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class UsuarioApplicationService {
 
   /**
    * Caso de uso para autenticar un usuario.
-   * 
+   *
    * @param email    El email del usuario.
    * @param password La contraseña en texto plano.
    * @return El DTO del usuario si las credenciales son correctas.

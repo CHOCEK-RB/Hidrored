@@ -1,4 +1,4 @@
-package com.hidrored.dominio.usuarios.modelo;
+package com.hidrored.modulos.usuarios.dominio;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;

@@ -1,4 +1,4 @@
-package com.hidrored.usuarios.infraestructura;
+package com.hidrored.modulos.usuarios.infraestructura.web;
 
 import lombok.Data;
 import lombok.Getter;
