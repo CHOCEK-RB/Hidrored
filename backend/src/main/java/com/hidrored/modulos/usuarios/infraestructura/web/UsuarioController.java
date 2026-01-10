@@ -1,4 +1,4 @@
-package com.hidrored.presentacion.usuarios;
+package com.hidrored.modulos.usuarios.infraestructura.web;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,7 @@ public class UsuarioController {
 
   /**
    * Endpoint para el inicio de sesión de usuarios.
-   * 
+   *
    * @param request Contiene el email y la contraseña.
    * @return Los datos del usuario si el login es exitoso.
    */
