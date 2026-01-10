@@ -1,4 +1,4 @@
-package com.hidrored.aplicacion.usuarios;
+package com.hidrored.modulos.usuarios.aplicacion;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

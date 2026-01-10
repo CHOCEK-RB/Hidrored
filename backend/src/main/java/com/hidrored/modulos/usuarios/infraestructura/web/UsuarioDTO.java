@@ -1,8 +1,8 @@
-package com.hidrored.aplicacion.usuarios;
+package com.hidrored.modulos.usuarios.infraestructura.web;
 
-import com.hidrored.dominio.usuarios.modelo.Usuario;
+import com.hidrored.modulos.usuarios.dominio.Usuario;
 
-import lombok.Getter;
+import lombok.Getter; 
 
 @Getter
 public class UsuarioDTO {
@@ -22,7 +22,7 @@ public class UsuarioDTO {
   /**
    * Método de fábrica (factory method) para convertir una entidad de dominio
    * a un DTO. Este es el método que faltaba.
-   * 
+   *
    * @param usuario La entidad de dominio Usuario.
    * @return Un nuevo objeto UsuarioDTO.
    */
