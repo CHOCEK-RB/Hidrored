@@ -1,5 +1,6 @@
 package com.hidrored.presentacion.usuarios;
 
+import com.hidrored.modulos.usuarios.infraestructura.web.RegistrarUsuarioRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

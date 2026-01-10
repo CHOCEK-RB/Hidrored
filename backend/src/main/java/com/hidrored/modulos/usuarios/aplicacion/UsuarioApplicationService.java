@@ -4,8 +4,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.hidrored.dominio.usuarios.IUsuarioRepository;
-import com.hidrored.dominio.usuarios.modelo.Usuario;
+import com.hidrored.modulos.usuarios.dominio.IUsuarioRepository;
+import com.hidrored.modulos.usuarios.dominio.Usuario;
+import com.hidrored.modulos.usuarios.infraestructura.web.UsuarioDTO; 
 
 @Service
 public class UsuarioApplicationService {

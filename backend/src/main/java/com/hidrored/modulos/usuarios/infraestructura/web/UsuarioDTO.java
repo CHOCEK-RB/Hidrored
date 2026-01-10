@@ -1,8 +1,8 @@
 package com.hidrored.modulos.usuarios.infraestructura.web;
 
-import com.hidrored.dominio.usuarios.modelo.Usuario;
+import com.hidrored.modulos.usuarios.dominio.Usuario;
 
-import lombok.Getter;
+import lombok.Getter; 
 
 @Getter
 public class UsuarioDTO {
