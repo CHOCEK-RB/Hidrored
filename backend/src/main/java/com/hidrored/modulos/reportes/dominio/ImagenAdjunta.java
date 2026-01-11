@@ -1,4 +1,4 @@
-package com.hidrored.shared.dominio;
+package com.hidrored.modulos.reportes.dominio;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

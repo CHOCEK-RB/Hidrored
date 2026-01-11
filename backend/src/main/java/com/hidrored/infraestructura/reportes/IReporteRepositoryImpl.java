@@ -1,7 +1,7 @@
 package com.hidrored.infraestructura.reportes;
 
-import com.hidrored.dominio.reportes.IReporteRepositoryCustom;
-import com.hidrored.dominio.reportes.modelo.Reporte;
+import com.hidrored.modulos.reportes.dominio.IReporteRepositoryCustom;
+import com.hidrored.modulos.reportes.dominio.modelo.Reporte;
 import org.springframework.data.geo.Circle;
 import org.springframework.data.geo.Point;
 import org.springframework.data.mongodb.core.MongoTemplate;

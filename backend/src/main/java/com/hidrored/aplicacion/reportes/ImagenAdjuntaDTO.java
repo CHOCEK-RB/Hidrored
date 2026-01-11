@@ -1,6 +1,6 @@
 package com.hidrored.aplicacion.reportes;
 
-import com.hidrored.shared.dominio.ImagenAdjunta;
+import com.hidrored.modulos.reportes.dominio.ImagenAdjunta;
 import lombok.Getter;
 import java.time.format.DateTimeFormatter;
 

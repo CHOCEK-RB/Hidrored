@@ -1,4 +1,4 @@
-package com.hidrored.dominio.reportes.modelo;
+package com.hidrored.modulos.reportes.dominio.modelo;
 
 public enum EstadoReporte {
   PENDIENTE,

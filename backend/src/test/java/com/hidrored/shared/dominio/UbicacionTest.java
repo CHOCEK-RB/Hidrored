@@ -1,4 +1,4 @@
-package com.hidrored.shared.dominio;
+package com.hidrored.modulos.reportes.dominio;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

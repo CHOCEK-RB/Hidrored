@@ -1,6 +1,6 @@
-package com.hidrored.dominio.reportes;
+package com.hidrored.modulos.reportes.dominio;
 
-import com.hidrored.dominio.reportes.modelo.Reporte;
+import com.hidrored.modulos.reportes.dominio.modelo.Reporte;
 import java.util.List;
 
 public interface IReporteRepositoryCustom {

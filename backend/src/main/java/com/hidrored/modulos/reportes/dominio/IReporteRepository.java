@@ -1,9 +1,9 @@
-package com.hidrored.dominio.reportes;
+package com.hidrored.modulos.reportes.dominio;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
-import com.hidrored.dominio.reportes.modelo.Reporte;
-import com.hidrored.dominio.reportes.modelo.EstadoReporte;
+import com.hidrored.modulos.reportes.dominio.modelo.Reporte;
+import com.hidrored.modulos.reportes.dominio.modelo.EstadoReporte;
 import java.util.List;
 
 @Repository

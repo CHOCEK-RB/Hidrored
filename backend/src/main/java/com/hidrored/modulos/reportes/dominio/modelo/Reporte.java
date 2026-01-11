@@ -1,12 +1,12 @@
-package com.hidrored.dominio.reportes.modelo;
+package com.hidrored.modulos.reportes.dominio.modelo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import com.hidrored.shared.dominio.Ubicacion;
-import com.hidrored.shared.dominio.ImagenAdjunta;
+import com.hidrored.modulos.reportes.dominio.Ubicacion;
+import com.hidrored.modulos.reportes.dominio.ImagenAdjunta;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;

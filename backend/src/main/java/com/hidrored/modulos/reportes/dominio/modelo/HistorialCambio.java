@@ -1,4 +1,4 @@
-package com.hidrored.dominio.reportes.modelo;
+package com.hidrored.modulos.reportes.dominio.modelo;
 
 import lombok.Getter;
 import java.time.LocalDateTime;

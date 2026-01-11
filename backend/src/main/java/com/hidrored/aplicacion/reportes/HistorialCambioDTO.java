@@ -3,7 +3,7 @@ package com.hidrored.aplicacion.reportes;
 import lombok.Getter;
 import java.time.format.DateTimeFormatter;
 
-import com.hidrored.dominio.reportes.modelo.HistorialCambio;
+import com.hidrored.modulos.reportes.dominio.modelo.HistorialCambio;
 
 @Getter
 public class HistorialCambioDTO {

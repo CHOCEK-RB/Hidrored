@@ -2,11 +2,11 @@ package com.hidrored.aplicacion.reportes;
 
 import tools.jackson.databind.JsonNode;
 
-import com.hidrored.dominio.reportes.IReporteRepository;
-import com.hidrored.dominio.reportes.modelo.*;
+import com.hidrored.modulos.reportes.dominio.IReporteRepository;
+import com.hidrored.modulos.reportes.dominio.modelo.*;
 import com.hidrored.modulos.usuarios.dominio.IUsuarioRepository;
-import com.hidrored.shared.dominio.ImagenAdjunta;
-import com.hidrored.shared.dominio.Ubicacion; 
+import com.hidrored.modulos.reportes.dominio.ImagenAdjunta;
+import com.hidrored.modulos.reportes.dominio.Ubicacion;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

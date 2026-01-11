@@ -1,6 +1,6 @@
 package com.hidrored.aplicacion.reportes;
 
-import com.hidrored.dominio.reportes.modelo.Reporte;
+import com.hidrored.modulos.reportes.dominio.modelo.Reporte;
 import lombok.Getter;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
