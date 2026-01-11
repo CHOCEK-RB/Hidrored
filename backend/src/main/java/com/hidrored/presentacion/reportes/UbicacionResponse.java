@@ -1,6 +1,6 @@
 package com.hidrored.presentacion.reportes;
 
-import com.hidrored.aplicacion.reportes.UbicacionDTO;
+import com.hidrored.modulos.reportes.infraestructura.web.UbicacionDTO;
 import lombok.Value;
 
 @Value

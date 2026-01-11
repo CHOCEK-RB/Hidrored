@@ -1,4 +1,4 @@
-package com.hidrored.aplicacion.reportes;
+package com.hidrored.modulos.reportes.infraestructura.web;
 
 import lombok.Getter;
 import java.time.format.DateTimeFormatter;

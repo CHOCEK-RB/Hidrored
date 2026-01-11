@@ -1,6 +1,6 @@
 package com.hidrored.presentacion.reportes;
 
-import com.hidrored.aplicacion.reportes.ReporteDTO;
+import com.hidrored.modulos.reportes.infraestructura.web.ReporteDTO;
 import lombok.Value;
 import java.util.List;
 

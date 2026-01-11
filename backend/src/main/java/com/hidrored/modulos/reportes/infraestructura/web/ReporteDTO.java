@@ -1,9 +1,13 @@
-package com.hidrored.aplicacion.reportes;
+package com.hidrored.modulos.reportes.infraestructura.web;
 
 import com.hidrored.modulos.reportes.dominio.modelo.Reporte;
 import lombok.Getter;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+
+import com.hidrored.modulos.reportes.infraestructura.web.ImagenAdjuntaDTO;
+import com.hidrored.modulos.reportes.infraestructura.web.UbicacionDTO;
+import com.hidrored.modulos.reportes.infraestructura.web.HistorialCambioDTO;
 
 @Getter
 public class ReporteDTO {

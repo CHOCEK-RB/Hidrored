@@ -8,8 +8,8 @@ import com.hidrored.modulos.usuarios.dominio.IUsuarioRepository;
 import com.hidrored.modulos.reportes.dominio.ImagenAdjunta;
 import com.hidrored.modulos.reportes.dominio.Ubicacion;
 import com.hidrored.modulos.storage.dominio.IStorageService; // Added
-import com.hidrored.aplicacion.reportes.CrearReporteCommand; // Added
-import com.hidrored.aplicacion.reportes.ReporteDTO; // Added
+import com.hidrored.modulos.reportes.aplicacion.CrearReporteCommand; // Updated
+import com.hidrored.modulos.reportes.infraestructura.web.ReporteDTO; // Updated
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package com.hidrored.aplicacion.reportes;
+package com.hidrored.modulos.reportes.aplicacion;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

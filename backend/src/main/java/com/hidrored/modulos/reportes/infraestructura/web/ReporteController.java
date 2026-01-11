@@ -1,4 +1,4 @@
-package com.hidrored.presentacion.reportes;
+package com.hidrored.modulos.reportes.infraestructura.web;
 
 import java.util.List;
 
@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.hidrored.aplicacion.reportes.CrearReporteCommand;
+import com.hidrored.modulos.reportes.aplicacion.CrearReporteCommand;
 import com.hidrored.modulos.reportes.aplicacion.ReporteApplicationService;
-import com.hidrored.aplicacion.reportes.ReporteDTO;
+import com.hidrored.modulos.reportes.infraestructura.web.ReporteDTO;
 
 @RestController
 @RequestMapping("/api/reportes")

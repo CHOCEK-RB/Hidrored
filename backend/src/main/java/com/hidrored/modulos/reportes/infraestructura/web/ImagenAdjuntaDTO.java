@@ -1,4 +1,4 @@
-package com.hidrored.aplicacion.reportes;
+package com.hidrored.modulos.reportes.infraestructura.web;
 
 import com.hidrored.modulos.reportes.dominio.ImagenAdjunta;
 import lombok.Getter;
