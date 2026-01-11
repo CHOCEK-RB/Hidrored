@@ -1,4 +1,4 @@
-package com.hidrored.aplicacion.reportes;
+package com.hidrored.modulos.reportes.aplicacion;
 
 import tools.jackson.databind.JsonNode;
 
@@ -7,6 +7,9 @@ import com.hidrored.modulos.reportes.dominio.modelo.*;
 import com.hidrored.modulos.usuarios.dominio.IUsuarioRepository;
 import com.hidrored.modulos.reportes.dominio.ImagenAdjunta;
 import com.hidrored.modulos.reportes.dominio.Ubicacion;
+import com.hidrored.modulos.storage.infraestructura.local.FileStorageService; // Added
+import com.hidrored.aplicacion.reportes.CrearReporteCommand; // Added
+import com.hidrored.aplicacion.reportes.ReporteDTO; // Added
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.time.LocalDateTime;
 
 @Service
 public class ReporteApplicationService {
@@ -71,8 +75,9 @@ public class ReporteApplicationService {
     }
 
     if (imagenFile != null && !imagenFile.isEmpty()) {
-      ImagenAdjunta imagenGuardada = fileStorageService.store(imagenFile);
-      nuevoReporte.setImagenAdjunta(imagenGuardada);
+      String imageUrl = fileStorageService.guardar(imagenFile);
+      nuevoReporte.setImagenAdjunta(new ImagenAdjunta(imageUrl, imagenFile.getOriginalFilename(),
+          imagenFile.getContentType(), imagenFile.getSize(), LocalDateTime.now()));
     }
 
     Reporte reporteGuardado = reporteRepository.save(nuevoReporte);

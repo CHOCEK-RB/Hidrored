@@ -1,7 +1,7 @@
-package com.hidrored.aplicacion.reportes;
+package com.hidrored.modulos.storage.infraestructura.local;
 
-import com.hidrored.aplicacion.reportes.excepciones.StorageException;
-import com.hidrored.modulos.reportes.dominio.ImagenAdjunta;
+import com.hidrored.modulos.storage.dominio.IStorageService;
+import com.hidrored.modulos.storage.dominio.excepciones.StorageException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
-public class FileStorageService {
+public class FileStorageService implements IStorageService {
 
   private final Path rootLocation = Paths.get("uploads");
 
@@ -24,7 +24,8 @@ public class FileStorageService {
     }
   }
 
-  public ImagenAdjunta store(MultipartFile file) {
+  @Override
+  public String guardar(MultipartFile file) {
     if (file.isEmpty()) {
       throw new StorageException("No se puede guardar un archivo vacío.");
     }
@@ -39,14 +40,15 @@ public class FileStorageService {
 
       Files.copy(file.getInputStream(), this.rootLocation.resolve(uniqueFilename));
 
-      return new ImagenAdjunta(
-          uniqueFilename,
-          originalFilename,
-          file.getContentType(),
-          file.getSize(),
-          LocalDateTime.now());
+      return uniqueFilename; // Retorna la URL (nombre de archivo único)
     } catch (IOException e) {
       throw new StorageException("Fallo al guardar el archivo.", e);
     }
+  }
+
+  @Override
+  public void eliminar(String url) {
+    // Implementar lógica de eliminación si es necesaria
+    // Por ahora, no se implementa nada específico
   }
 }

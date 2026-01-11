@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hidrored.aplicacion.reportes.CrearReporteCommand;
-import com.hidrored.aplicacion.reportes.ReporteApplicationService;
+import com.hidrored.modulos.reportes.aplicacion.ReporteApplicationService;
 import com.hidrored.aplicacion.reportes.ReporteDTO;
 
 @RestController

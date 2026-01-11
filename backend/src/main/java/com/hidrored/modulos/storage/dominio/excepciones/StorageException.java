@@ -1,4 +1,4 @@
-package com.hidrored.aplicacion.reportes.excepciones;
+package com.hidrored.modulos.storage.dominio.excepciones;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
