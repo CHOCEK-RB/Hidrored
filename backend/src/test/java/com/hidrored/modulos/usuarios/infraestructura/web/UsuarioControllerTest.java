@@ -39,7 +39,8 @@ class UsuarioControllerTest {
     req.put("telefono", "555");
     req.put("password", "p");
 
-    when(usuarioService.registrarUsuario(any())).thenReturn(UsuarioDTO.fromDomain(new com.hidrored.modulos.usuarios.dominio.Usuario("Test", "t@test.com", "555", "h")));
+    when(usuarioService.registrarUsuario(any())).thenReturn(
+        UsuarioDTO.fromDomain(new com.hidrored.modulos.usuarios.dominio.Usuario("Test", "t@test.com", "555", "h")));
 
     mockMvc.perform(post("/api/usuarios/registro").contentType(MediaType.APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(req))).andExpect(status().isOk())

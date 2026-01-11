@@ -7,7 +7,7 @@ import com.hidrored.modulos.reportes.dominio.modelo.*;
 import com.hidrored.modulos.usuarios.dominio.IUsuarioRepository;
 import com.hidrored.modulos.reportes.dominio.ImagenAdjunta;
 import com.hidrored.modulos.reportes.dominio.Ubicacion;
-import com.hidrored.modulos.storage.infraestructura.local.FileStorageService; // Added
+import com.hidrored.modulos.storage.dominio.IStorageService; // Added
 import com.hidrored.aplicacion.reportes.CrearReporteCommand; // Added
 import com.hidrored.aplicacion.reportes.ReporteDTO; // Added
 
@@ -24,11 +24,11 @@ public class ReporteApplicationService {
 
   private final IReporteRepository reporteRepository;
   private final IUsuarioRepository usuarioRepository;
-  private final FileStorageService fileStorageService;
+  private final IStorageService fileStorageService;
   private final RestTemplate restTemplate;
 
   public ReporteApplicationService(IReporteRepository reporteRepository, IUsuarioRepository usuarioRepository,
-      FileStorageService fileStorageService, RestTemplate restTemplate) {
+      IStorageService fileStorageService, RestTemplate restTemplate) {
     this.reporteRepository = reporteRepository;
     this.usuarioRepository = usuarioRepository;
     this.fileStorageService = fileStorageService;
