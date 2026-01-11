@@ -1,4 +1,4 @@
-package com.hidrored.infraestructura.reportes;
+package com.hidrored.modulos.reportes.infraestructura.persistencia;
 
 import com.hidrored.modulos.reportes.dominio.IReporteRepositoryCustom;
 import com.hidrored.modulos.reportes.dominio.modelo.Reporte;
