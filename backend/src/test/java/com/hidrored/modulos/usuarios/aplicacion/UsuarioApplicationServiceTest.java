@@ -54,7 +54,8 @@ class UsuarioApplicationServiceTest {
   void registrarUsuario_duplicateEmail_throws() {
     RegistrarUsuarioCommand command = new RegistrarUsuarioCommand("Ana", "ana@example.com", "999999999", "secret");
 
-    when(usuarioRepository.findByEmail(command.getEmail())).thenReturn(Optional.of(new Usuario("X", command.getEmail(), "0", "h")));
+    when(usuarioRepository.findByEmail(command.getEmail()))
+        .thenReturn(Optional.of(new Usuario("X", command.getEmail(), "0", "h")));
 
     assertThrows(IllegalStateException.class, () -> service.registrarUsuario(command));
   }

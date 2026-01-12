@@ -1,6 +1,6 @@
 package com.hidrored.shared.infraestructura.config;
 
-import com.hidrored.dominio.reportes.modelo.Reporte;
+import com.hidrored.modulos.reportes.dominio.modelo.Reporte;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;

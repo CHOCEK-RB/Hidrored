@@ -1,6 +1,6 @@
 package com.hidrored.shared.infraestructura.excepciones;
 
-import com.hidrored.aplicacion.reportes.excepciones.StorageException;
+import com.hidrored.modulos.storage.dominio.excepciones.StorageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

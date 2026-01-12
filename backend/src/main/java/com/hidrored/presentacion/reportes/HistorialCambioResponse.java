@@ -1,6 +1,6 @@
 package com.hidrored.presentacion.reportes;
 
-import com.hidrored.aplicacion.reportes.HistorialCambioDTO;
+import com.hidrored.modulos.reportes.infraestructura.web.HistorialCambioDTO;
 import lombok.Value;
 
 @Value
