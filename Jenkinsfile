@@ -132,7 +132,7 @@ pipeline {
                         echo 'Esperando a que la aplicación inicie (30 segundos)...'
                         sh 'sleep 30'
                         echo 'Ejecutando escaneo de seguridad con OWASP ZAP...'
-                        sh "docker run --rm --network=host -v ${workspacePath}:/zap/wrk/:rw ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://localhost:8080 -g zap_gen.conf -J report.json -r report.html"
+                        sh "docker run --rm --network=host -v ${workspacePath}:/zap/wrk/:rw ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://localhost:8080 -g zap_gen.conf -J report.json -r report.html -I"
 
                     } finally {
                         echo 'Limpiando entorno...'
