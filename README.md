@@ -154,7 +154,7 @@ Sigue estas instrucciones para configurar y ejecutar el proyecto en tu entorno l
 
 ## Modelo de dominio
 
-![Modelo de dominio](assets/modelo_dominio.png)
+![Modelo de dominio](assets/nuevo_modulo.png)
 
 ---
 
@@ -168,26 +168,47 @@ El proyecto sigue los principios de **Domain-Driven Design (DDD)** y **Arquitect
 
 ### Capas de Arquitectura
 
-1.  **Capa de Presentación:** Responsable de la interacción con el usuario. En el backend, esto corresponde a los `Controllers` de la API REST que exponen los endpoints.
-    ![Presentacion](assets/presentacion.png)
-2.  **Capa de Aplicación:** Orquesta los casos de uso. Contiene los `Services` que coordinan la lógica de negocio, pero no la implementan directamente.
-    ![Aplicacion](assets/aplicacion.png)
-3.  **Capa de Dominio:** El corazón de la aplicación. Contiene las entidades, objetos de valor, agregados y las interfaces de los repositorios. No tiene dependencias de ninguna otra capa.
-    ![Dominio](assets/modelo_dominio.png)
-4.  **Capa de Infraestructura:** Implementa los detalles técnicos. Aquí se encuentran las implementaciones de los repositorios (para MongoDB), la configuración de Spring, etc.
-    ![Infraestructura](assets/infraestructura.png)
+#### 1. Capa de Dominio (Corazón del Sistema) 
+Es la capa más interna y no tiene dependencias de librerías externas o frameworks.
+* **Entidades:** Define los objetos de negocio principales como `Reporte`, `Usuario` y `Comentario`.
+* **Interfaces de Repositorio:** Define los contratos para la persistencia (ej. `IReporteRepository`), permitiendo que el dominio no sepa que los datos se guardan en MongoDB.
+* **Reglas de Negocio:** Contiene la lógica esencial, como la actualización de estados de un reporte o la creación de IDs únicos.
 
-<div id="diagrama-paquetes"></div>
+#### 2. Capa de Aplicación
+Orquesta los casos de uso del sistema. Actúa como mediador entre la capa de presentación y el dominio.
+* **Servicios de Aplicación:** Clases como `ReporteApplicationService` o `UsuarioApplicationService` que coordinan las tareas necesarias para completar una acción del usuario.
+* **Comandos y DTOs:** Utiliza objetos como `CrearReporteCommand` para recibir datos y `UsuarioDTO` para devolver información estructurada a la web.
 
-### Diagrama de Paquetes
+#### 3. Capa de Presentación (Infraestructura Web)
+Es el punto de entrada de las solicitudes externas.
+* **Controladores REST:** Clases como `ReporteController` y `UsuarioController` que exponen los endpoints de la API, manejan las peticiones HTTP y devuelven respuestas `ResponseEntity`.
+* **Validación de Entrada:** Gestiona los datos recibidos mediante objetos de petición como `LoginRequest`.
 
-![Diagrama de Paquetes](assets/diagrama_paquetes.jpg)
+#### 4. Capa de Infraestructura Técnica
+Implementa los detalles técnicos y herramientas externas.
+* **Persistencia:** Implementaciones específicas para MongoDB.
+* **Servicios Externos:** El `FileStorageService` que gestiona el guardado físico de imágenes en el servidor local.
+* **Configuración:** Clases de seguridad y configuración global en el paquete `shared`.<div id="diagrama-paquetes"></div>
 
 ---
 
 <div id="servicios-rest"></div>
 
 ## Módulos y Servicios REST
+
+#### 1. Modulo de Reporte 
+<img src="assets/modulo_repotes.png" width="400" alt="Módulo de Reportes">
+
+#### 2. Modulo de Storage 
+![Modulo de Storage](assets/modulo_storage.png)
+
+#### 3. Modulo de Usuario 
+<img src="assets/modulo_usuario.png" width="400" alt="Módulo de Usuario">
+
+#### 4. Modulo Social 
+<img src="assets/modulo_social.png" width="400" alt="Módulo Social">
+
+
 
 La API REST está organizada en módulos que corresponden a los principales dominios de la aplicación. A continuación se listan los endpoints más relevantes.
 
@@ -289,8 +310,7 @@ Se siguen prácticas de código limpio para mejorar la legibilidad, como nombres
 
 ## Gestión de Proyecto
 
-### Trello
-
-- **URL:** [Trello](https://trello.com/b/LHojjtUQ/aguais)
+### Github Project
+- **URL:** [Git-Hub](https://github.com/users/CHOCEK-RB/projects/1)
 - **Tablero:**
-  ![Tablero Trello](assets/trello.png)
+  ![Comando de issues](assets/github_project.png)
