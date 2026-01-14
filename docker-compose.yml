@@ -13,6 +13,11 @@ services:
   backend:
     build: ./backend
     container_name: hidrored-backend
+
+    depends_on:
+      mongo:
+        condition: service_healthy
+
     ports:
       - "8080:8080"
     depends_on:
@@ -21,7 +26,6 @@ services:
       - hidrored-net
     environment:
       - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/hidrored_db
-    command: ["java", "-jar", "app.jar", "--spring.data.mongodb.uri=mongodb://mongo:27017/hidrored_db"]
 
   mongo-express:
     image: mongo-express:latest
