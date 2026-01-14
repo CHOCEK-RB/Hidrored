@@ -38,7 +38,6 @@ export interface ReporteDTO {
   distrito?: string;
   provincia?: string;
   ubicacion: UbicacionDTO;
-  comentarios: ComentarioDTO[];
   historialCambios: HistorialCambioDTO[];
   imagenAdjunta: ImagenAdjuntaDTO | null;
 }

@@ -1,20 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-import { type ReporteDTO } from "../types";
+import { type ReporteDTO, type ComentarioDTO } from "../types";
 
 const ReportDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
   const [reporte, setReporte] = useState<ReporteDTO | null>(null);
+  const [comments, setComments] = useState<ComentarioDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [newComment, setNewComment] = useState("");
 
-  const fetchReport = async () => {
+  const fetchReport = useCallback(async () => {
+    if (!id) return;
     try {
-      setLoading(true);
       const response = await axios.get(
         `http://localhost:8080/api/reportes/${id}`,
       );
@@ -22,26 +23,43 @@ const ReportDetailPage: React.FC = () => {
     } catch (err) {
       setError("No se pudo cargar el reporte. Es posible que no exista.");
       console.error(err);
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [id]);
+
+  const fetchComments = useCallback(async () => {
+    if (!id) return;
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/v1/comentarios/${id}`,
+      );
+      setComments(response.data);
+    } catch (err) {
+      // No es un error crítico si los comentarios no cargan, así que solo lo logueamos
+      console.error("Error al cargar los comentarios:", err);
+    }
+  }, [id]);
 
   useEffect(() => {
-    fetchReport();
-  }, [id]);
+    const loadData = async () => {
+      setLoading(true);
+      await Promise.all([fetchReport(), fetchComments()]);
+      setLoading(false);
+    };
+    loadData();
+  }, [id, fetchReport, fetchComments]);
 
   const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newComment.trim() || !user) return;
+    if (!newComment.trim() || !user || !id) return;
 
     try {
       const response = await axios.post(
-        `http://localhost:8080/api/reportes/${id}/comentarios`,
+        `http://localhost:8080/api/v1/comentarios/${id}`,
         { contenido: newComment },
         { headers: { "X-Usuario-ID": user.id } },
       );
-      setReporte(response.data);
+      const nuevoComentario = response.data;
+      setComments([...comments, nuevoComentario]);
       setNewComment("");
     } catch (err) {
       console.error("Error al enviar el comentario:", err);
@@ -121,8 +139,8 @@ const ReportDetailPage: React.FC = () => {
             Comentarios
           </h2>
           <div className="space-y-4 mb-6">
-            {reporte.comentarios.length > 0 ? (
-              reporte.comentarios.map((comment) => (
+            {comments.length > 0 ? (
+              comments.map((comment) => (
                 <div key={comment.id} className="bg-slate-700 p-4 rounded-lg">
                   <p className="text-gray-300">{comment.contenido}</p>
                   <p className="text-xs text-gray-500 mt-2">
