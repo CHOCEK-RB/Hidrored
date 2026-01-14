@@ -27,14 +27,6 @@ pipeline {
             }
         }
 
-        stage('Build Backend') {
-            steps {
-                dir('backend') {
-                    echo 'Compilando y empaquetando la aplicación backend...'
-                    sh 'mvn clean package -DskipTests'
-                }
-            }
-        }
 
         stage('Análisis Estático') {
             steps {
@@ -64,22 +56,17 @@ pipeline {
             steps {
                 script {
                     try {
-                        echo 'Iniciando base de datos MongoDB...'
-                        sh 'docker-compose up -d mongo'
-
-                        echo 'Iniciando aplicación backend...'
-                        sh 'nohup java -jar backend/target/*.jar > backend.log 2>&1 & echo $! > app.pid'
-
-                        echo 'Esperando a que la aplicación inicie (30 segundos)...'
-                        sh 'sleep 30'
+                        echo 'Iniciando entorno de prueba en contenedores...'
+                        sh 'docker-compose up --build -d backend'
+                        
+                        echo 'Esperando a que la aplicación inicie (60 segundos)...'
+                        sh 'sleep 60'
 
                         echo 'Ejecutando pruebas funcionales con Newman...'
                         sh 'mkdir -p newman'
                         sh 'newman run Hidrored.postman_collection.json --reporters cli,junit --reporter-junit-export newman/newman-results.xml'
-
                     } finally {
-                        echo 'Limpiando... Deteniendo la aplicación y la base de datos.'
-                        sh 'kill $(cat app.pid)'
+                        echo 'Limpiando... Deteniendo contenedores.'
                         sh 'docker-compose down'
                     }
                 }
@@ -95,28 +82,23 @@ pipeline {
             steps {
                 script {
                     try {
-                        echo 'Iniciando base de datos MongoDB...'
-                        sh 'docker-compose up -d mongo'
+                        echo 'Iniciando entorno de prueba en contenedores...'
+                        sh 'docker-compose up --build -d backend'
 
-                        echo 'Iniciando aplicación backend...'
-                        sh 'nohup java -jar backend/target/*.jar > backend.log 2>&1 & echo $! > app.pid'
-
-                        echo 'Esperando a que la aplicación inicie (30 segundos)...'
-                        sh 'sleep 30'
+                        echo 'Esperando a que la aplicación inicie (60 segundos)...'
+                        sh 'sleep 60'
 
                         echo 'Ejecutando pruebas de rendimiento con JMeter...'
                         sh 'jmeter -n -t jmeter-tests/hidrored_performance_test.jmx -l jmeter-tests/results.jtl'
-
                     } finally {
-                        echo 'Limpiando... Deteniendo la aplicación y la base de datos.'
-                        sh 'kill $(cat app.pid)'
+                        echo 'Limpiando... Deteniendo contenedores.'
                         sh 'docker-compose down'
                     }
                 }
             }
             post {
                 always {
-                  perfReport sourceDataFiles: 'jmeter-tests/results.jtl', parsers: [[$class: 'JMeterParser', glob: 'jmeter-tests/results.jtl']]
+                    perfReport sourceDataFiles: 'jmeter-tests/results.jtl', parsers: [[$class: 'JMeterParser', glob: 'jmeter-tests/results.jtl']]
                 }
             }
         }
@@ -126,17 +108,16 @@ pipeline {
                 script {
                     def workspacePath = pwd()
                     try {
-                        echo 'Iniciando entorno para escaneo de seguridad...'
-                        sh 'docker-compose up -d mongo'
-                        sh 'nohup java -jar backend/target/*.jar > backend.log 2>&1 & echo $! > app.pid'
-                        echo 'Esperando a que la aplicación inicie (30 segundos)...'
-                        sh 'sleep 30'
+                        echo 'Iniciando entorno de prueba en contenedores...'
+                        sh 'docker-compose up --build -d backend'
+
+                        echo 'Esperando a que la aplicación inicie (60 segundos)...'
+                        sh 'sleep 60'
+                        
                         echo 'Ejecutando escaneo de seguridad con OWASP ZAP...'
                         sh "docker run --rm --network=host -v ${workspacePath}:/zap/wrk/:rw ghcr.io/zaproxy/zaproxy:stable zap-baseline.py -t http://localhost:8080 -g zap_gen.conf -J report.json -r report.html -I"
-
                     } finally {
-                        echo 'Limpiando entorno...'
-                        sh 'kill $(cat app.pid)'
+                        echo 'Limpiando... Deteniendo contenedores.'
                         sh 'docker-compose down'
                     }
                 }

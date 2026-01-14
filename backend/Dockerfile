@@ -1,16 +1,20 @@
-# Usar una imagen base con Java 11
-FROM eclipse-temurin:11-jre-alpine
+FROM maven:3.8-openjdk-17 AS builder
 
-
-# Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-# Copiar el archivo JAR empaquetado por Maven al contenedor
-# El nombre del JAR puede variar, usamos un comodín
-COPY target/Hidrored-*.jar app.jar
+COPY pom.xml .
+RUN mvn dependency:go-offline
 
-# Exponer el puerto en el que corre la aplicación Spring Boot
+COPY src ./src
+
+RUN mvn clean package -DskipTests
+
+FROM eclipse-temurin:17-jre
+
+WORKDIR /app
+
+COPY --from=builder /app/target/Hidrored-*.jar app.jar
+
 EXPOSE 8080
 
-# Comando para ejecutar la aplicación cuando se inicie el contenedor
 ENTRYPOINT ["java","-jar","/app/app.jar"]
