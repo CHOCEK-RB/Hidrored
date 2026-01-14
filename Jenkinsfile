@@ -24,8 +24,8 @@ pipeline {
             steps {
                 dir('frontend') {
                     echo 'Instalando dependencias y construyendo el frontend...'
-                    sh 'pnpm install'
-                    sh 'pnpm run build'
+                    sh 'npm install'
+                    sh 'npm run build'
                 }
             }
         }

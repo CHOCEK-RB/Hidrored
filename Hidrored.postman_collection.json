@@ -274,15 +274,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}{{baseUrlReportes}}?id={{reportId}}",
+							"raw": "{{baseUrl}}{{baseUrlReportes}}/{{reportId}}",
 							"host": [
 								"{{baseUrl}}{{baseUrlReportes}}"
 							],
-							"query": [
-								{
-									"key": "id",
-									"value": "{{reportId}}"
-								}
+							"path": [
+								"{{reportId}}"
 							]
 						}
 					},
@@ -416,7 +413,10 @@
 				"packages": {},
 				"requests": {},
 				"exec": [
-					""
+					"pm.environment.set(\"baseUrl\", \"http://localhost:8080\");",
+					"pm.environment.set(\"baseUrlUsuarios\", \"/api/usuarios\");",
+					"pm.environment.set(\"baseUrlReportes\", \"/api/reportes\");",
+					"pm.environment.set(\"baseUrlComentarios\", \"/api/v1/comentarios\");"
 				]
 			}
 		},
