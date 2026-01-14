@@ -137,7 +137,7 @@ pipeline {
             post {
                 always {
                     // Publica los resultados de rendimiento para que Jenkins los muestre
-                    perfReport parsers: [JMeterParser(glob: 'jmeter-tests/results.jtl')]
+                    perfReport sourceDataFiles: 'jmeter-tests/results.jtl', parsers: [JMeterParser()]
                 }
             }
         }
