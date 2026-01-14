@@ -1,4 +1,14 @@
 {
     "java.configuration.updateBuildConfiguration": "interactive",
-    "java.compile.nullAnalysis.mode": "disabled"
+    "java.compile.nullAnalysis.mode": "disabled",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "redhat.java",
+
+    "java.format.settings.url": "https://raw.githubusercontent.com/google/styleguide/gh-pages/eclipse-java-google-style.xml",
+
+    "java.format.comments.enabled": true,
+    "java.format.onType.enabled": false,
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true
+
 }

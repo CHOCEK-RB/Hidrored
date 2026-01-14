@@ -5,10 +5,23 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mongo-data:/data/db 
+      - mongo-data:/data/db
 
     networks:
       - hidrored-net
+
+  backend:
+    build: ./backend
+    container_name: hidrored-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongo
+    networks:
+      - hidrored-net
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/hidrored_db
+
   mongo-express:
     image: mongo-express:latest
     container_name: hidrored-mongo-express
@@ -33,4 +46,3 @@ networks:
 volumes:
   mongo-data:
     driver: local
-
