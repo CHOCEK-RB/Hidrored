@@ -62,6 +62,8 @@ pipeline {
                         echo 'Esperando a que la aplicación inicie (60 segundos)...'
                         sh 'sleep 60'
 
+                        sh 'docker-compose logs backend'
+
                         echo 'Ejecutando pruebas funcionales con Newman...'
                         sh 'mkdir -p newman'
                         sh 'newman run Hidrored.postman_collection.json --reporters cli,junit --reporter-junit-export newman/newman-results.xml'

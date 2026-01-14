@@ -21,6 +21,7 @@ services:
       - hidrored-net
     environment:
       - SPRING_DATA_MONGODB_URI=mongodb://mongo:27017/hidrored_db
+    command: ["java", "-jar", "app.jar", "--spring.data.mongodb.uri=mongodb://mongo:27017/hidrored_db"]
 
   mongo-express:
     image: mongo-express:latest
