@@ -1,5 +1,6 @@
 package com.hidrored.modulos.storage.infraestructura.local;
 
+import com.hidrored.modulos.storage.aplicacion.GestionarArchivoService;
 import com.hidrored.modulos.storage.dominio.IStorageService;
 import com.hidrored.modulos.storage.dominio.excepciones.StorageException;
 import org.springframework.stereotype.Service;
