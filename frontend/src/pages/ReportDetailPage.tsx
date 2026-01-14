@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../context/AuthContext";
-import { type ReporteDTO } from "../components/InteractiveMap";
+import { type ReporteDTO } from "../types";
 
 const ReportDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();

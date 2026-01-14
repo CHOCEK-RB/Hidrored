@@ -1,0 +1,435 @@
+{
+	"info": {
+		"_postman_id": "f351b9cb-57d3-483f-8d86-67b89441d554",
+		"name": "Hidrored",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "51442761",
+		"_collection_link": "https://cesitaralejo19-2704180.postman.co/workspace/CHOCEK's-Workspace~67cf3484-552a-4722-867d-9ce635c88918/collection/51442761-f351b9cb-57d3-483f-8d86-67b89441d554?action=share&source=collection_link&creator=51442761"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Registro",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Guardar ID del usuario\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.environment.set(\"userId\", jsonData.id);",
+									"    console.log(\"ID guardado:\", jsonData.id);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const randomEmail = pm.variables.replaceIn(\"{{$randomEmail}}\");",
+									"const randomPassword = pm.variables.replaceIn(\"{{$randomPassword}}\");",
+									"const randomNombre = pm.variables.replaceIn(\"{{$randomFullName}}\");",
+									"const randomTelefono = pm.variables.replaceIn(\"{{$randomPhoneNumber}}\");",
+									"",
+									"pm.environment.set(\"email\", randomEmail);",
+									"pm.environment.set(\"password\", randomPassword);",
+									"pm.environment.set(\"nombre\", randomNombre);",
+									"pm.environment.set(\"telefono\", randomTelefono);",
+									"",
+									"console.log(\"Datos generados para registro:\");",
+									"console.log(\"Email:\", randomEmail);",
+									"console.log(\"Password:\", randomPassword);",
+									"console.log(\"Nombre:\", randomNombre);",
+									"console.log(\"Teléfono:\", randomTelefono);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\":\"{{nombre}}\",\n    \"email\":\"{{email}}\",\n    \"telefono\":\"{{telefono}}\",\n    \"password\":\"{{password}}\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{baseUrlUsuarios}}/registro",
+							"host": [
+								"{{baseUrl}}{{baseUrlUsuarios}}"
+							],
+							"path": [
+								"registro"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Guardar ID del usuario\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.environment.set(\"userId\", jsonData.id);",
+									"    console.log(\"ID guardado:\", jsonData.id);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{baseUrlUsuarios}}/login",
+							"host": [
+								"{{baseUrl}}{{baseUrlUsuarios}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reportes",
+			"item": [
+				{
+					"name": "Obtener reportes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{baseUrlReportes}}",
+							"host": [
+								"{{baseUrl}}{{baseUrlReportes}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un nuevo reporte",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function getRandomType() {",
+									"    const typeEnum = [\"FUGA\", \"TUBERIA_ROTA\", \"DESBORDE\", \"OTROS\"];",
+									"    const randomIndex = Math.floor(Math.random() * typeEnum.length);",
+									"    return typeEnum[randomIndex];",
+									"}",
+									"",
+									"function getRandomPriority() {",
+									"    const priorityEnum = [\"BAJA\", \"MEDIA\", \"ALTA\"];",
+									"    const randomIndex = Math.floor(Math.random() * priorityEnum.length);",
+									"    return priorityEnum[randomIndex];",
+									"}",
+									"",
+									"function getRandomLatitud() {",
+									"    const minLat = -17.2983;",
+									"    const maxLat = -14.6017;",
+									"    const randomLat = Math.random() * (maxLat - minLat) + minLat;",
+									"    return randomLat.toFixed(6);",
+									"}",
+									"",
+									"function getRandomLongitud() {",
+									"    const minLon = -81.3264;",
+									"    const maxLon = -70.0978;",
+									"    const randomLon = Math.random() * (maxLon - minLon) + minLon;",
+									"    return randomLon.toFixed(6);",
+									"}",
+									"",
+									"const tipoAleatorio = getRandomType();",
+									"const prioridadAleatorio = getRandomPriority();",
+									"const latitudAleatoria = getRandomLatitud();",
+									"const longitudAleatoria = getRandomLongitud();",
+									"",
+									"pm.variables.set(\"tipo\", tipoAleatorio);",
+									"pm.variables.set(\"prioridad\", prioridadAleatorio);",
+									"pm.variables.set(\"latitud\", latitudAleatoria);",
+									"pm.variables.set(\"longitud\", longitudAleatoria);",
+									"",
+									"console.log(\"Tipo seleccionado:\", tipoAleatorio);",
+									"console.log(\"Prioridad seleccionada:\", prioridadAleatorio);",
+									"console.log(\"Latitud generada:\", latitudAleatoria);",
+									"console.log(\"Longitud generada:\", longitudAleatoria);"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Guardar ID del reporte\", function () {",
+									"    const jsonData = pm.response.json();",
+									"    pm.environment.set(\"reportId\", jsonData.id);",
+									"    console.log(\"ID guardado:\", jsonData.id);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "usuarioId",
+								"value": "{{userId}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "titulo",
+									"value": "{{$randomLoremParagraph}}",
+									"type": "text"
+								},
+								{
+									"key": "descripcion",
+									"value": "{{$randomLoremText}}",
+									"type": "text"
+								},
+								{
+									"key": "tipo",
+									"value": "{{tipo}}",
+									"type": "text"
+								},
+								{
+									"key": "prioridad",
+									"value": "{{prioridad}}",
+									"type": "text"
+								},
+								{
+									"key": "latitud",
+									"value": "{{latitud}}",
+									"type": "text"
+								},
+								{
+									"key": "longitud",
+									"value": "{{longitud}}",
+									"type": "text"
+								},
+								{
+									"key": "direccion",
+									"value": "{{$randomStreetAddress}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{baseUrlReportes}}",
+							"host": [
+								"{{baseUrl}}{{baseUrlReportes}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener reporte por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{baseUrlReportes}}/{{reportId}}",
+							"host": [
+								"{{baseUrl}}{{baseUrlReportes}}"
+							],
+							"path": [
+								"{{reportId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener mis reportes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "X-Usuario-ID",
+								"value": "{{userId}}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}{{baseUrlReportes}}/mis-reportes",
+							"host": [
+								"{{baseUrl}}{{baseUrlReportes}}"
+							],
+							"path": [
+								"mis-reportes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener reportes cercanos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "lat",
+									"value": "-16.385",
+									"type": "text"
+								},
+								{
+									"key": "lng",
+									"value": "-71.536",
+									"type": "text"
+								},
+								{
+									"key": "radioKm",
+									"value": "100.0",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{baseUrlReportes}}/cercanos",
+							"host": [
+								"{{baseUrl}}{{baseUrlReportes}}"
+							],
+							"path": [
+								"cercanos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comentarios",
+			"item": [
+				{
+					"name": "Agregar un comentario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Usuario-ID",
+								"value": "{{userId}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"contenido\": \"{{$randomLoremParagraph}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}{{baseUrlComentarios}}/{{reportId}}",
+							"host": [
+								"{{baseUrl}}{{baseUrlComentarios}}"
+							],
+							"path": [
+								"{{reportId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar comentarios por referencia",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}{{baseUrlComentarios}}/{{reportId}}",
+							"host": [
+								"{{baseUrl}}{{baseUrlComentarios}}"
+							],
+							"path": [
+								"{{reportId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					"pm.environment.set(\"baseUrl\", \"http://localhost:8080\");",
+					"pm.environment.set(\"baseUrlUsuarios\", \"/api/usuarios\");",
+					"pm.environment.set(\"baseUrlReportes\", \"/api/reportes\");",
+					"pm.environment.set(\"baseUrlComentarios\", \"/api/v1/comentarios\");"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
